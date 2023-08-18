@@ -2,7 +2,7 @@ services:
   frontend:
     build: frontend
     expose:
-      - "80"
+      - "3000"
     restart: unless-stopped
     environment:
       - VIRTUAL_HOST=fire-alarm.noboroto.id.vn
