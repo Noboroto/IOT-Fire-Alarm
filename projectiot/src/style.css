@@ -417,8 +417,8 @@
     line-height: normal;
     position: absolute;
     text-align: center;
-    top: 31px;
-    width: 191px;
+    top: 40px;
+    width: 200px;
   }
   
   .app .home-page-about-page {
@@ -439,11 +439,11 @@
     font-family: "Outfit", Helvetica;
     font-size: 16px;
     font-weight: 400;
-    left: 500px;
+    left: 400px;
     letter-spacing: 0;
     line-height: 31px;
     position: absolute;
-    top: 51px;
+    top: 70px;
     width: 74px;
   }
   
@@ -465,11 +465,11 @@
     font-family: "Outfit", Helvetica;
     font-size: 16px;
     font-weight: 600;
-    left: 500px;
+    left: 400px;
     letter-spacing: 0;
     line-height: normal;
     position: absolute;
-    top: 31px;
+    top: 45px;
     width: 128px;
   }
   .app .chart-temp{
@@ -588,7 +588,7 @@
     letter-spacing: 1px;
   }
   .app .MuiFormControl-root,.css-1nrlq1o-MuiFormControl-root{
-    left: 650px;
+    left: 600px;
     bottom: 150px;
   }
   .app .MuiFormLabel-root,.MuiInputLabel-root,.MuiInputLabel-formControl,.MuiInputLabel-animated,.MuiInputLabel-shrink,.MuiInputLabel-standard,.MuiFormLabel-colorPrimary,.MuiInputLabel-root,.MuiInputLabel-formControl,.MuiInputLabel-animated,.MuiInputLabel-shrink,.MuiInputLabel-standard,.css-1c2i806-MuiFormLabel-root-MuiInputLabel-root{
@@ -600,24 +600,10 @@
   .app .MuiInputBase-input,.MuiInput-input,.MuiInputBase-inputAdornedStart,.css-1x51dt5-MuiInputBase-input-MuiInput-input{
     color: white;
   }
-  .app .submit-button {
-    color: #5a056b;
-    font-family: "Montserrat", Helvetica;
-    font-size: 20px;
-    font-weight: 600;
-    height: 28px;
-    left: 50px;
-    letter-spacing: 0;
-    line-height: 27.5px;
-    position: absolute;
-    text-align: center;
-    top: 12px;
-    white-space: nowrap;
-  }
   .app .wrap-submit{
     background-color: white;
-    height: 50px;
-    width: 150px;
+    height: 30px;
+    width: 60px;
     border-radius: 10px;
     left: 900px;
     bottom: 200px;
@@ -626,4 +612,7 @@
   }
   .app .wrap-submit:hover{
     transform: scale(1.05);
+  }
+  .app .textinput{
+    color: white;
   }

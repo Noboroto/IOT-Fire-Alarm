@@ -2,6 +2,7 @@ import React from "react";
 // import MyButton from "./components/Button/MyButton";
 // import ObjectOther from "./components/ObjectOther/ObjectOther";
 import "./style.css";
+import { Button } from "@mui/material";
 import BarChart from "./components/BarChart";
 import LineChartTemp from "./components/LineChartTemp";
 import LineChartHumid from "./components/LineChartHumid";
@@ -18,6 +19,24 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import { useState } from 'react';
 const App = () => {
   const [name, setName] = React.useState();
+  const [message, setMessage] = useState('');
+  const sendMail = () => {
+    if (message) {
+      const emailSubject = 'Sending feedback';
+      const recipient = 'vophamthanhphuong@gmail.com';
+      const emailBody = `Thông tin nhập từ người dùng : ${message}`;
+      const gmailURL = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(recipient)}&su=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+      window.open(gmailURL, '_blank');
+    }
+  }
+  const handleClick = event => {
+    event.preventDefault();
+    console.log('handleClick 👉️', message);
+  };
+  const handleChange = event => {
+    setMessage(event.target.value);
+    console.log('value is: ', event.target.value);
+  }
   const [userData, setUserData] = useState({
     labels: TempData.map((data) => data.hour),
     datasets: [{
@@ -167,8 +186,6 @@ const App = () => {
           <div className="overlap-5">
             <div className="text-wrapper-14">Hệ thống báo cháy</div>
             <div className="email-linkedin">
-              Email
-              <br />
               <a href="https://www.linkedin.com/in/1110phuong/" className="link-linkedin" target="_blank" rel="noopener noreferrer">LinkedIn</a>
               <br />
               <a href="https://www.facebook.com/cac1110/" className="link-fb" target="_blank" rel="noopener noreferrer">Facebook</a>
@@ -183,6 +200,10 @@ const App = () => {
         </InputLabel>
         <Input
           id="input-with-icon-adornment"
+          type="text"
+          name = "message"
+          onChange = {handleChange}
+          value = {message}
           startAdornment={
             <InputAdornment position="start">
               <AccountCircle />
@@ -191,7 +212,7 @@ const App = () => {
         />
       </FormControl></Box>
         <div className="wrap-submit">
-          <div className="submit-button">SEND</div>
+          <Button variant="contained" onClick={sendMail}>Send</Button>
         </div>
         </div>
       </div>
