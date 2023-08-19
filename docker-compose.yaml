@@ -3,8 +3,7 @@ services:
     build: frontend
     expose:
       - "80"
-    ports:
-      - "8266:80"
     restart: unless-stopped
     environment:
-      - VIRTUAL_HOST=fire-alarm.noboroto.id.vn
+      - VIRTUAL_HOST=fire.noboroto.id.vn
+      - LETSENCRYPT_HOST=fire.noboroto.id.vn
