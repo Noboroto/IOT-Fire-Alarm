@@ -9,3 +9,10 @@ services:
     environment:
       - VIRTUAL_HOST=fire.noboroto.id.vn
       - VIRTUAL_PORT=80
+    networks:
+      - proxynet
+
+networks:
+  proxynet:
+    external:
+      name: proxy_net
