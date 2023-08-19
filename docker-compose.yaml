@@ -4,6 +4,7 @@ services:
     expose:
       - "80"
     restart: unless-stopped
+    ports:
+      - "8266:80"
     environment:
       - VIRTUAL_HOST=fire.noboroto.id.vn
-      - LETSENCRYPT_HOST=fire.noboroto.id.vn
