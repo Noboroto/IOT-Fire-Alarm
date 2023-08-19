@@ -4,7 +4,7 @@ WORKDIR /app
 COPY ./public ./public
 COPY ./src ./src
 COPY ./static ./static
-COPY ./package.json ./ackage.json
+COPY ./package.json ./package.json
 COPY ./yarn.lock ./yarn.lock
 
 RUN yarn
