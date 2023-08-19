@@ -3,7 +3,7 @@ services:
     build: frontend
     expose:
       - "80"
-    port:
+    ports:
       - "8266:80"
     restart: unless-stopped
     environment:
