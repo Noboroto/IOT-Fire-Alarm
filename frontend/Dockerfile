@@ -7,7 +7,7 @@ COPY ./static ./static
 COPY ./package.json ./package.json
 COPY ./yarn.lock ./yarn.lock
 
-RUN yarn
+RUN yarn --production
 RUN yarn build
 
 # production stage
