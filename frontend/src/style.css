@@ -1,9 +1,14 @@
+.body{
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
+}
 .app {
     background-color: #0a0f39;
     display: flex;
     flex-direction: row;
     justify-content: center;
-    width: 100%;
+    width: 100vw;
   }
   
   .app .div {

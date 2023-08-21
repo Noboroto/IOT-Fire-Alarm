@@ -1,4 +1,7 @@
 import React from "react";
+// import { response } from 'express';
+// import { json } from 'express';
+// import e from 'express';
 // import MyButton from "./components/Button/MyButton";
 // import ObjectOther from "./components/ObjectOther/ObjectOther";
 import "./style.css";
@@ -17,6 +20,61 @@ import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { useState } from 'react';
+// const passport = require('passport');
+// const GoogleStrategy = require('passport-google-oauth20').Strategy;
+
+// passport.use(
+//   new GoogleStrategy(
+//     {
+//       clientID: '323611894793-41r6anitc3ihu29dutjb21s4t3ro43o6.apps.googleusercontent.com',
+//       clientSecret: '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',
+//       callbackURL: 'http://localhost:3000/auth/google/callback', // Điều chỉnh URL callback của bạn
+//     },
+//     (accessToken, refreshToken, profile, done) => {
+//       // Xử lý sau khi xác thực thành công, bạn có thể lưu thông tin người dùng vào cơ sở dữ liệu tại đây
+//       return done(null, profile);
+//     }
+//   )
+// );
+// const express = require('express');
+// const app = express();
+// const session = require('express-session');
+
+// // Sử dụng session middleware
+// app.use(session({ secret: 'your-secret-key', resave: false, saveUninitialized: true }));
+
+// // Khởi động Passport và gắn nó với session
+// app.use(passport.initialize());
+// app.use(passport.session());
+
+// // Đăng nhập bằng Google
+// app.get('/auth/google',
+//   passport.authenticate('google', { scope: ['profile'] })
+// );
+
+// // Xử lý sau khi xác thực thành công
+// app.get('/auth/google/callback',
+//   passport.authenticate('google', { failureRedirect: '/' }),
+//   (req, res) => {
+//     // Xác thực thành công, thực hiện chuyển hướng hoặc xử lý logic tiếp theo
+//     res.redirect('/dashboard'); // Điều hướng đến trang sau khi xác thực thành công
+//   }
+// );
+
+// // Đăng xuất
+// app.get('/logout', (req, res) => {
+//   req.logout();
+//   res.redirect('/');
+// });
+// app.get('/dashboard', (req, res) => {
+//   if (req.isAuthenticated()) {
+//     // Người dùng đã đăng nhập, cho phép truy cập trang Dashboard
+//     res.render('dashboard');
+//   } else {
+//     // Người dùng chưa đăng nhập, chuyển hướng về trang chính hoặc trang đăng nhập
+//     res.redirect('/');
+//   }
+// });
 const App = () => {
   const [name, setName] = React.useState();
   const [message, setMessage] = useState('');
@@ -120,9 +178,9 @@ const App = () => {
             <div className="navbar">
               <ul className="page">
                 <li className="link"><a href="" className="home-page">HOME</a></li>
-                {/* <li className="link"><a href="/about" className="about-page">About</a></li>
-                <li className="link"><a href="/" className="login">Login</a></li>
-                <li className="link"><a href="/" className="signup">Sign up</a></li> */}
+                {/* <li className="link"><a href="/about" className="about-page">About</a></li> */}
+                <li className="link"><a href="/auth/google" className="login">Login</a></li>
+                <li className="link"><a href="/logout" className="signup">Sign up</a></li>
               </ul>
             </div>
 
