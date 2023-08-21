@@ -1,0 +1,11 @@
+services:
+  frontend:
+    build: frontend
+    expose:
+      - "80"
+    restart: unless-stopped
+    ports:
+      - "8266:80"
+    environment:
+      - VIRTUAL_HOST=fire.noboroto.id.vn
+      - VIRTUAL_PORT=80
