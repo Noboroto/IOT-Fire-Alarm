@@ -111,7 +111,7 @@ const App = () => {
   const [humidData, setHumidData] = useState({
     labels: HumidData.map((data) => data.hour),
     datasets: [{
-      label: "Độ ẩm",
+      label: "Lượng gas",
       data: HumidData.map((data) => data.rate),
       backgroundColor: "blue",
       borderColor: "black",
@@ -162,15 +162,11 @@ const App = () => {
             </div>
             <div className="overlap-wrapper">
               <div className="overlap-group-2">
-                <div className="rectangle" />
-                <div className="rectangle-2" />
               </div>
             </div>
             <div className="text-wrapper">Khí GAS</div>
-            <div className="text-wrapper-2">Khói</div>
             <img className="img" alt="Object other" src="object-other-07.png" />
             <div className="gas">0%</div>
-            <div className="ashe">0%</div>
           </div>
           <div className="overlap-2">
             <div className="ellipse-2" />
@@ -188,21 +184,11 @@ const App = () => {
               <div className="overlap-group-2">
                 <div className="rectangle" />
                 <div className="rectangle-2" />
+                <div className="text-wrapper-9">Nhiệt độ</div>
+                <div className="temperature">25°C</div>
               </div>
             </div>
             <h1 className="h-1">HỆ THỐNG BÁO CHÁY</h1>
-            <div className="text-wrapper-9">Nhiệt độ</div>
-            <div className="temperature">25°C</div>
-          </div>
-          <div className="overlap-3">
-            <div className="div-wrapper">
-              <div className="overlap-group-2">
-                <div className="rectangle" />
-                <div className="rectangle-2" />
-              </div>
-            </div>
-            <div className="text-wrapper-11">Độ ẩm</div>
-            <div className="humidity">50%</div>
           </div>
           <div className="charts">
             <div className="temp-wrapper">
@@ -215,21 +201,7 @@ const App = () => {
             <div className="humid-wrapper">
               <div className="chart-humid">
                 <div className="chart-humid-ratio">
-                  <LineChartHumid chartData={humidData} />
-                </div>
-              </div>
-            </div>
-            <div className="gas-wrapper">
-              <div className="chart-gas">
-                <div className="chart-gas-ratio">
-                  <LineChartGas chartData={gasData} />
-                </div>
-              </div>
-            </div>
-            <div className="ashe-wrapper">
-              <div className="chart-ashe">
-                <div className="chart-ashe-ratio">
-                  <LineChartAshe chartData={asheData} />
+                  <LineChartGas chartData={humidData} />
                 </div>
               </div>
             </div>

@@ -14,7 +14,7 @@
   .app .div {
     background-color: #0a0f39;
     border: 1px none;
-    height: 1900px;
+    height: 1700px;
     overflow: hidden;
     position: relative;
     width: 1440px;
@@ -269,7 +269,7 @@
   }
   .app .overlap-group-wrapper {
     height: 225px;
-    left: 401px;
+    left: 670px;
     opacity: 0.9;
     position: absolute;
     top: 468px;
@@ -281,12 +281,12 @@
     font-family: "Outfit", Helvetica;
     font-size: 24px;
     font-weight: 600;
-    left: 481px;
+    left: 88px;
     letter-spacing: 0;
     line-height: 27.5px;
     position: absolute;
     text-align: center;
-    top: 474px;
+    top: 5px;
     white-space: nowrap;
   }
   
@@ -308,12 +308,12 @@
     font-family: "Outfit", Helvetica;
     font-size: 48px;
     font-weight: 600;
-    left: 481px;
+    left: 85px;
     letter-spacing: 0;
     line-height: 27.5px;
     position: absolute;
     text-align: center;
-    top: 579px;
+    top: 110px;
     white-space: nowrap;
   }
   
@@ -400,7 +400,7 @@
     height: 212px;
     left: 188px;
     position: absolute;
-    top: 1600px;
+    top: 1300px;
     width: 1074px;
   }
   
