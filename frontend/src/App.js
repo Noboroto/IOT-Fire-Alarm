@@ -20,14 +20,15 @@ import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { useState } from 'react';
+// const express = require('express');
 // const passport = require('passport');
 // const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 // passport.use(
 //   new GoogleStrategy(
 //     {
-//       clientID: '323611894793-41r6anitc3ihu29dutjb21s4t3ro43o6.apps.googleusercontent.com',
-//       clientSecret: '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',
+//       clientID: process.env.GOOGLE_CLIENT_ID,
+//       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
 //       callbackURL: 'http://localhost:3000/auth/google/callback', // Điều chỉnh URL callback của bạn
 //     },
 //     (accessToken, refreshToken, profile, done) => {
@@ -36,7 +37,6 @@ import { useState } from 'react';
 //     }
 //   )
 // );
-// const express = require('express');
 // const app = express();
 // const session = require('express-session');
 
