@@ -5,8 +5,7 @@ services:
       - "4000"
     restart: unless-stopped
     environment:
-      - VIRTUAL_HOST=fire.noboroto.id.vn
-      - VIRTUAL_PATH=/api
+      - VIRTUAL_HOST=a.noboroto.id.vn
     networks:
       - proxynet
 

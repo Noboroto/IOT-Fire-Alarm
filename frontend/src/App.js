@@ -12,7 +12,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import { useState } from 'react';
 import axios from 'axios';
 
-const API_URI = "https://fire.noboroto.id.vn/api/"
+const API_URI = "https://a.noboroto.id.vn/"
 const intervalTime = 1000
 
 const App = () => {
