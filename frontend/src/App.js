@@ -1,9 +1,4 @@
 import React from "react";
-// import { response } from 'express';
-// import { json } from 'express';
-// import e from 'express';
-// import MyButton from "./components/Button/MyButton";
-// import ObjectOther from "./components/ObjectOther/ObjectOther";
 import "./style.css";
 import { Button } from "@mui/material";
 import BarChart from "./components/BarChart";
@@ -158,15 +153,12 @@ const App = () => {
               <div className="overlap-group-2">
                 <div className="rectangle" />
                 <div className="rectangle-2" />
+                <div className="text-wrapper">Khí GAS</div>
+                <div className="gas">Bình thường</div>
               </div>
             </div>
-            <div className="overlap-wrapper">
-              <div className="overlap-group-2">
-              </div>
-            </div>
-            <div className="text-wrapper">Khí GAS</div>
             <img className="img" alt="Object other" src="object-other-07.png" />
-            <div className="gas">0%</div>
+            
           </div>
           <div className="overlap-2">
             <div className="ellipse-2" />
@@ -180,12 +172,20 @@ const App = () => {
               </ul>
             </div>
 
-            <div className="overlap-group-wrapper">
+            <div className="overlap-temp-wrapper">
               <div className="overlap-group-2">
                 <div className="rectangle" />
                 <div className="rectangle-2" />
                 <div className="text-wrapper-9">Nhiệt độ</div>
                 <div className="temperature">25°C</div>
+              </div>
+            </div>
+            <div className="overlap-fire-wrapper">
+              <div className="overlap-fire">
+                <div className="rectangle-fire" />
+                <div className="rectangle-fire-2" />
+                <div className="fireLabel">Lửa</div>
+                <div className="fire">Bình thường</div>
               </div>
             </div>
             <h1 className="h-1">HỆ THỐNG BÁO CHÁY</h1>
@@ -195,13 +195,6 @@ const App = () => {
               <div className="chart-temp">
                 <div className="chart-temp-ratio">
                   <LineChartTemp chartData={userData} />
-                </div>
-              </div>
-            </div>
-            <div className="humid-wrapper">
-              <div className="chart-humid">
-                <div className="chart-humid-ratio">
-                  <LineChartGas chartData={humidData} />
                 </div>
               </div>
             </div>

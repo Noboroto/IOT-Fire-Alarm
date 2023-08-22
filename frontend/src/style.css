@@ -30,7 +30,7 @@
   
   .app .overlap-group {
     height: 752px;
-    left: 942px;
+    left: 700px;
     position: absolute;
     top: 203px;
     width: 1300px;
@@ -49,7 +49,7 @@
   
   .app .group {
     height: 225px;
-    left: 0;
+    left: 110px;
     opacity: 0.9;
     position: absolute;
     top: 265px;
@@ -100,7 +100,7 @@
     line-height: 27.5px;
     position: absolute;
     text-align: center;
-    top: 271px;
+    top:8px;
     white-space: nowrap;
   }
   
@@ -118,7 +118,7 @@
     white-space: nowrap;
   }
   .app .img {
-    left: 270px !important;
+    left: 500px !important;
     position: absolute !important;
     top: 0 !important;
     height: 250px;
@@ -128,14 +128,14 @@
   .app .gas {
     color: #ff0000;
     font-family: "Outfit", Helvetica;
-    font-size: 48px;
+    font-size: 24px;
     font-weight: 600;
-    left: 96px;
+    left: 60px;
     letter-spacing: 0;
     line-height: 27.5px;
     position: absolute;
     text-align: center;
-    top: 376px;
+    top: 110px;
     white-space: nowrap;
   }
   
@@ -267,15 +267,71 @@
   .app .signup:hover{
     letter-spacing: 1px;
   }
-  .app .overlap-group-wrapper {
+  .app .overlap-temp-wrapper {
     height: 225px;
-    left: 670px;
+    left: 550px;
     opacity: 0.9;
     position: absolute;
     top: 468px;
     width: 256px;
   }
+  .app .overlap-fire-wrapper{
+    height: 225px;
+    left: 1070px;
+    opacity: 0.9;
+    position: absolute;
+    top: 468px;
+    width: 256px;
+  }
+  .app .overlap-fire{
+    height: 225px;
+    position: relative;
+  }
+  .app .rectangle-fire {
+    background-color: #aad9d9;
+    border-radius: 40px;
+    height: 225px;
+    left: 1px;
+    position: absolute;
+    top: 0;
+    width: 255px;
+  }
   
+  .app .rectangle-fire-2 {
+    background-color: #8080d7;
+    border-radius: 40px;
+    height: 42px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 256px;
+  }
+  .app .fireLabel{
+    color: #000000;
+    font-family: "Outfit", Helvetica;
+    font-size: 24px;
+    font-weight: 600;
+    left: 110px;
+    letter-spacing: 0;
+    line-height: 27.5px;
+    position: absolute;
+    text-align: center;
+    top: 5px;
+    white-space: nowrap;
+  }
+  .app .fire{
+    color: #ff0000;
+    font-family: "Outfit", Helvetica;
+    font-size: 24px;
+    font-weight: 600;
+    left: 60px;
+    letter-spacing: 0;
+    line-height: 27.5px;
+    position: absolute;
+    text-align: center;
+    top: 110px;
+    white-space: nowrap;
+  }
   .app .text-wrapper-9 {
     color: #000000;
     font-family: "Outfit", Helvetica;
@@ -400,7 +456,7 @@
     height: 212px;
     left: 188px;
     position: absolute;
-    top: 1300px;
+    top: 1400px;
     width: 1074px;
   }
   
@@ -478,19 +534,19 @@
     width: 128px;
   }
   .app .chart-temp{
-    height: 300px;
-    width: 530px;
+    height: 500px;
+    width: 930px;
     /* margin-left: 400px; */
     background-color: white;
     /* margin-top: 900px; */
     top: 900px;
-    left: 400px;
+    left: 470px;
     position: absolute;
     border-radius: 50px;
   }
   .app .chart-temp-ratio{
-    width: 400px;
-    height: 200px;
+    width: 800px;
+    height: 500px;
     position: absolute;
     top: 50px;
     left: 75px;
