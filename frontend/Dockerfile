@@ -1,11 +1,10 @@
 # build stage
 FROM node:18-alpine as build-stage
 WORKDIR /app
-COPY ./public ./public
-COPY ./src ./src
-COPY ./static ./static
+
 COPY ./package.json ./package.json
 COPY ./yarn.lock ./yarn.lock
+COPY . .
 
 RUN yarn --production
 RUN yarn build
