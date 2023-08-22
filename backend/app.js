@@ -33,7 +33,7 @@ const receiveMQTT = () => {
     }
 
     const lastItem = tempData[tempData.length - 1];
-    if ( lastItem["time"] != getCurrentTime().toString() && tempData.length >= DATA_LIMIT) {
+    if (tempData.length >= DATA_LIMIT) {
         tempData.shift();
     }
     tempData.push(
