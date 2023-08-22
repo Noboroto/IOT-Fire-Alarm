@@ -12,7 +12,8 @@ services:
       - proxynet
 
   frontend:
-    depends_on: backend
+    depends_on:
+      - backend
     build: frontend
     expose:
       - "80"
