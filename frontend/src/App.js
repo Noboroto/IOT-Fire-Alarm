@@ -106,7 +106,7 @@ const App = () => {
   const [humidData, setHumidData] = useState({
     labels: HumidData.map((data) => data.hour),
     datasets: [{
-      label: "Độ ẩm",
+      label: "Lượng gas",
       data: HumidData.map((data) => data.rate),
       backgroundColor: "blue",
       borderColor: "black",
@@ -176,14 +176,8 @@ const App = () => {
               <div className="overlap-group-2">
                 <div className="rectangle" />
                 <div className="rectangle-2" />
-              </div>
-            </div>
-            <div className="overlap-fire-wrapper">
-              <div className="overlap-fire">
-                <div className="rectangle-fire" />
-                <div className="rectangle-fire-2" />
-                <div className="fireLabel">Lửa</div>
-                <div className="fire">Bình thường</div>
+                <div className="text-wrapper-9">Nhiệt độ</div>
+                <div className="temperature">25°C</div>
               </div>
             </div>
             <div className="overlap-fire-wrapper">
@@ -195,18 +189,6 @@ const App = () => {
               </div>
             </div>
             <h1 className="h-1">HỆ THỐNG BÁO CHÁY</h1>
-            <div className="text-wrapper-9">Nhiệt độ</div>
-            <div className="temperature">25°C</div>
-          </div>
-          <div className="overlap-3">
-            <div className="div-wrapper">
-              <div className="overlap-group-2">
-                <div className="rectangle" />
-                <div className="rectangle-2" />
-              </div>
-            </div>
-            <div className="text-wrapper-11">Độ ẩm</div>
-            <div className="humidity">50%</div>
           </div>
           <div className="charts">
             <div className="temp-wrapper">
