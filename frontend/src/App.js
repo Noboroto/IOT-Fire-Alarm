@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./style.css";
 import { Button } from "@mui/material";
 import LineChartTemp from "./components/LineChartTemp";
-import { TempData } from "./Data";
+import { TempDemoData } from "./Data";
 import Box from '@mui/material/Box';
 import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
@@ -10,6 +10,10 @@ import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { useState } from 'react';
+import axios from 'axios';
+
+const API_URI = "https://fire.noboroto.id.vn/api/"
+const intervalTime = 1000
 
 const App = () => {
   const [message, setMessage] = useState('');
@@ -34,10 +38,10 @@ const App = () => {
   }
   
   const [tempChartData, setTempChartData] = useState({
-    labels: TempData.map((data) => data.hour),
+    labels: TempDemoData.map((data) => data["time"]),
     datasets: [{
       label: "Nhiệt độ",
-      data: TempData.map((data) => data.rate),
+      data: TempDemoData.map((data) => data["rate"]),
       backgroundColor: 'red',
       borderColor: "black",
       borderWidth: 2,
@@ -46,7 +50,39 @@ const App = () => {
       },
     }]
   })
+  const [tempData, setTempData] = useState([])
 
+  const fetchData = async () => {
+    try {
+      const { data: response } = await axios.get(`${API_URI}/temperature`);
+      return response
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
+  useEffect(() => {
+    var fetchInterval = setInterval(() => {
+      fetchData().then((res) => setTempData(JSON.parse(res)))
+    }, intervalTime);
+    return () => clearInterval(fetchInterval)
+  }, [])
+
+  useEffect(() => {
+    setTempChartData({
+      labels: tempData.map((data) => data["time"]),
+      datasets: [{
+        label: "Nhiệt độ",
+        data: tempData.map((data) => data["rate"]),
+        backgroundColor: 'red',
+        borderColor: "black",
+        borderWidth: 2,
+        font: {
+          size: 20
+        },
+      }]
+    })
+  },[tempData])
 
   return (
     <div className="app">

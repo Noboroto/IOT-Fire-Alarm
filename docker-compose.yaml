@@ -9,6 +9,18 @@ services:
       - VIRTUAL_PORT=80
     networks:
       - proxynet
+  
+  backend:
+    build: backend
+    expose:
+      - "80"
+    restart: unless-stopped
+    environment:
+      - VIRTUAL_HOST=fire.noboroto.id.vn
+      - VIRTUAL_PORT=80
+      - VIRTUAL_PATH=/api
+    networks:
+      - proxynet
 
 networks:
   proxynet:
