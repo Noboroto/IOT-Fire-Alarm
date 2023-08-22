@@ -158,7 +158,7 @@ const App = () => {
               </div>
             </div>
             <img className="img" alt="Object other" src="object-other-07.png" />
-            
+
           </div>
           <div className="overlap-2">
             <div className="ellipse-2" />
@@ -217,26 +217,26 @@ const App = () => {
             </div>
             <div className="text-wrapper-16">contact</div>
           </div>
-          <Box className ="feedback"sx={{ '& > :not(style)': { m: 1 } }}> <FormControl variant="standard">
-        <InputLabel htmlFor="input-with-icon-adornment">
-          Write your feedback
-        </InputLabel>
-        <Input
-          id="input-with-icon-adornment"
-          type="text"
-          name = "message"
-          onChange = {handleChange}
-          value = {message}
-          startAdornment={
-            <InputAdornment position="start">
-              <AccountCircle />
-            </InputAdornment>
-          }
-        />
-      </FormControl></Box>
-        <div className="wrap-submit">
-          <Button variant="contained" onClick={sendMail}>Send</Button>
-        </div>
+          <Box className="feedback" sx={{ '& > :not(style)': { m: 1 } }}> <FormControl variant="standard">
+            <InputLabel htmlFor="input-with-icon-adornment">
+              Write your feedback
+            </InputLabel>
+            <Input
+              id="input-with-icon-adornment"
+              type="text"
+              name="message"
+              onChange={handleChange}
+              value={message}
+              startAdornment={
+                <InputAdornment position="start">
+                  <AccountCircle />
+                </InputAdornment>
+              }
+            />
+          </FormControl></Box>
+          <div className="wrap-submit">
+            <Button variant="contained" onClick={sendMail}>Send</Button>
+          </div>
         </div>
       </div>
     </div>
