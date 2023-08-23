@@ -1,4 +1,4 @@
-.home {
+.app {
     background-color: #0a0f39;
     display: flex;
     flex-direction: row;
@@ -6,32 +6,32 @@
     width: 100%;
   }
   
-  .home .div {
+  .app .div {
     background-color: #0a0f39;
     border: 1px none;
-    height: 1371px;
+    height: 1700px;
     overflow: hidden;
     position: relative;
     width: 1440px;
   }
   
-  .home .overlap {
-    height: 955px;
+  .app .overlap {
+    height: 1600px;
     left: -215px;
     position: absolute;
     top: -144px;
     width: 2242px;
   }
   
-  .home .overlap-group {
+  .app .overlap-group {
     height: 752px;
-    left: 942px;
+    left: 700px;
     position: absolute;
     top: 203px;
     width: 1300px;
   }
   
-  .home .ellipse {
+  .app .ellipse {
     background-color: #305c9b;
     border-radius: 538px/285.5px;
     filter: blur(385px);
@@ -42,21 +42,21 @@
     width: 1076px;
   }
   
-  .home .group {
+  .app .group {
     height: 225px;
-    left: 0;
+    left: 110px;
     opacity: 0.9;
     position: absolute;
     top: 265px;
     width: 256px;
   }
   
-  .home .overlap-group-2 {
+  .app .overlap-group-2 {
     height: 225px;
     position: relative;
   }
   
-  .home .rectangle {
+  .app .rectangle {
     background-color: #aad9d9;
     border-radius: 40px;
     height: 225px;
@@ -66,7 +66,7 @@
     width: 255px;
   }
   
-  .home .rectangle-2 {
+  .app .rectangle-2 {
     background-color: #8080d7;
     border-radius: 40px;
     height: 42px;
@@ -76,7 +76,7 @@
     width: 256px;
   }
   
-  .home .overlap-wrapper {
+  .app .overlap-wrapper {
     height: 225px;
     left: 270px;
     opacity: 0.9;
@@ -85,7 +85,7 @@
     width: 256px;
   }
   
-  .home .text-wrapper {
+  .app .text-wrapper {
     color: #000000;
     font-family: "Outfit", Helvetica;
     font-size: 24px;
@@ -95,11 +95,11 @@
     line-height: 27.5px;
     position: absolute;
     text-align: center;
-    top: 271px;
+    top:8px;
     white-space: nowrap;
   }
   
-  .home .text-wrapper-2 {
+  .app .text-wrapper-2 {
     color: #000000;
     font-family: "Outfit", Helvetica;
     font-size: 24px;
@@ -112,28 +112,29 @@
     top: 271px;
     white-space: nowrap;
   }
-  
-  .home .object-other-07 {
-    left: 270px !important;
+  .app .img {
+    left: 500px !important;
     position: absolute !important;
     top: 0 !important;
+    height: 250px;
+    width: 250px;
   }
   
-  .home .text-wrapper-3 {
+  .app .gas {
     color: #ff0000;
     font-family: "Outfit", Helvetica;
-    font-size: 48px;
+    font-size: 24px;
     font-weight: 600;
-    left: 96px;
+    left: 60px;
     letter-spacing: 0;
     line-height: 27.5px;
     position: absolute;
     text-align: center;
-    top: 376px;
+    top: 110px;
     white-space: nowrap;
   }
   
-  .home .text-wrapper-4 {
+  .app .ashe {
     color: #ff0000;
     font-family: "Outfit", Helvetica;
     font-size: 48px;
@@ -147,7 +148,7 @@
     white-space: nowrap;
   }
   
-  .home .overlap-2 {
+  .app .overlap-2 {
     height: 693px;
     left: 0;
     position: absolute;
@@ -155,7 +156,7 @@
     width: 1472px;
   }
   
-  .home .ellipse-2 {
+  .app .ellipse-2 {
     background-color: #9c5eac;
     border: 1px solid;
     border-color: #000000;
@@ -168,7 +169,7 @@
     width: 574px;
   }
   
-  .home .rectangle-3 {
+  .app .rectangle-3 {
     background-color: #00000054;
     box-shadow: 0px 4px 4px #00000040;
     height: 59px;
@@ -178,20 +179,22 @@
     width: 1065px;
   }
   
-  .home .navbar {
+  .app .navbar {
     height: 28px;
-    left: 405px;
+    left: 422px;
     position: absolute;
     top: 163px;
     width: 1067px;
   }
-  
-  .home .home-page {
+  .app .page{
+    list-style: none;
+  }
+  .home-page {
     color: #fff3f3;
     font-family: "Outfit", Helvetica;
     font-size: 20px;
     font-weight: 700;
-    left: 0;
+    left: 100px;
     letter-spacing: 0;
     line-height: 27.5px;
     position: absolute;
@@ -201,7 +204,7 @@
     text-decoration: none;
     transition: .25s ease;
   }
-  .home .login {
+  .app .login {
     color: #fff3f3;
     font-family: "Outfit", Helvetica;
     font-size: 20px;
@@ -210,18 +213,19 @@
     letter-spacing: 0;
     line-height: 27.5px;
     position: absolute;
+    text-decoration: none;
     top: 0;
     white-space: nowrap;
     width: 107px;
     transition: .25s ease;
   }
-  .home .login:hover{
+  .app .login:hover{
     letter-spacing: 1px;
   }
-  .home .home-page:hover{
+  .home-page:hover{
     letter-spacing: 1px;
   }
-  .home .about-page {
+  .app .about-page {
     color: #fff3f3;
     font-family: "Outfit", Helvetica;
     font-size: 20px;
@@ -232,14 +236,15 @@
     position: absolute;
     text-align: center;
     top: 0;
+    text-decoration: none;
     white-space: nowrap;
     width: 107px;
     transition: .25s ease;
   }
-  .home .about-page:hover{
+  .app .about-page:hover{
     letter-spacing: 1px;
   }
-  .home .signup {
+  .app .signup {
     color: #fff3f3;
     font-family: "Outfit", Helvetica;
     font-size: 20px;
@@ -249,37 +254,94 @@
     line-height: 27.5px;
     position: absolute;
     top: 0;
+    text-decoration: none;
     white-space: nowrap;
     width: 107px;
     transition: .25s ease;
   }
-  .home .signup:hover{
+  .app .signup:hover{
     letter-spacing: 1px;
   }
-  .home .overlap-group-wrapper {
+  .app .overlap-temp-wrapper {
     height: 225px;
-    left: 401px;
+    left: 550px;
     opacity: 0.9;
     position: absolute;
     top: 468px;
     width: 256px;
   }
+  .app .overlap-fire-wrapper{
+    height: 225px;
+    left: 1070px;
+    opacity: 0.9;
+    position: absolute;
+    top: 468px;
+    width: 256px;
+  }
+  .app .overlap-fire{
+    height: 225px;
+    position: relative;
+  }
+  .app .rectangle-fire {
+    background-color: #aad9d9;
+    border-radius: 40px;
+    height: 225px;
+    left: 1px;
+    position: absolute;
+    top: 0;
+    width: 255px;
+  }
   
-  .home .text-wrapper-9 {
+  .app .rectangle-fire-2 {
+    background-color: #8080d7;
+    border-radius: 40px;
+    height: 42px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 256px;
+  }
+  .app .fireLabel{
     color: #000000;
     font-family: "Outfit", Helvetica;
     font-size: 24px;
     font-weight: 600;
-    left: 481px;
+    left: 110px;
     letter-spacing: 0;
     line-height: 27.5px;
     position: absolute;
     text-align: center;
-    top: 474px;
+    top: 5px;
+    white-space: nowrap;
+  }
+  .app .fire{
+    color: #ff0000;
+    font-family: "Outfit", Helvetica;
+    font-size: 24px;
+    font-weight: 600;
+    left: 60px;
+    letter-spacing: 0;
+    line-height: 27.5px;
+    position: absolute;
+    text-align: center;
+    top: 110px;
+    white-space: nowrap;
+  }
+  .app .text-wrapper-9 {
+    color: #000000;
+    font-family: "Outfit", Helvetica;
+    font-size: 24px;
+    font-weight: 600;
+    left: 88px;
+    letter-spacing: 0;
+    line-height: 27.5px;
+    position: absolute;
+    text-align: center;
+    top: 5px;
     white-space: nowrap;
   }
   
-  .home .h-1 {
+  .app .h-1 {
     color: #ffffff;
     font-family: "Outfit", Helvetica;
     font-size: 60px;
@@ -292,21 +354,21 @@
     width: 685px;
   }
   
-  .home .text-wrapper-10 {
+  .app .temperature {
     color: #ff0000;
     font-family: "Outfit", Helvetica;
     font-size: 48px;
     font-weight: 600;
-    left: 481px;
+    left: 85px;
     letter-spacing: 0;
     line-height: 27.5px;
     position: absolute;
     text-align: center;
-    top: 579px;
+    top: 110px;
     white-space: nowrap;
   }
   
-  .home .overlap-3 {
+  .app .overlap-3 {
     height: 225px;
     left: 672px;
     position: absolute;
@@ -314,7 +376,7 @@
     width: 256px;
   }
   
-  .home .div-wrapper {
+  .app .div-wrapper {
     height: 225px;
     left: 0;
     opacity: 0.9;
@@ -323,7 +385,7 @@
     width: 256px;
   }
   
-  .home .text-wrapper-11 {
+  .app .text-wrapper-11 {
     color: #000000;
     font-family: "Outfit", Helvetica;
     font-size: 24px;
@@ -337,7 +399,7 @@
     white-space: nowrap;
   }
   
-  .home .text-wrapper-12 {
+  .app .humidity {
     color: #ff0000;
     font-family: "Outfit", Helvetica;
     font-size: 48px;
@@ -351,7 +413,7 @@
     white-space: nowrap;
   }
   
-  .home .group-2 {
+  .app .group-2 {
     height: 79px;
     left: 777px;
     position: absolute;
@@ -359,7 +421,7 @@
     width: 318px;
   }
   
-  .home .overlap-4 {
+  .app .overlap-4 {
     background-color: #ff0000;
     border-radius: 55px;
     height: 79px;
@@ -368,13 +430,13 @@
     transition: background-color 0.3s ease, transform 0.3s ease;
   }
   
-  .home .alarmButton {
+  .app .alarmButton {
     color: #ffffff;
     font-family: "Montserrat", Helvetica;
     font-size: 29px;
     font-weight: 600;
     height: 28px;
-    left: 16px;
+    left: 25px;
     letter-spacing: 0;
     line-height: 27.5px;
     position: absolute;
@@ -385,22 +447,23 @@
   .overlap-4:hover{
     transform: scale(1.05);
   }
-  .home .group-4 {
+  .app .group-4 {
     height: 212px;
     left: 188px;
     position: absolute;
-    top: 827px;
+    top: 1400px;
     width: 1074px;
   }
   
-  .home .overlap-5 {
+  .app .overlap-5 {
     background-color: #000000b2;
     height: 212px;
     position: relative;
     width: 1064px;
+    opacity: 0.8;
   }
   
-  .home .text-wrapper-14 {
+  .app .text-wrapper-14 {
     color: #ffffff;
     font-family: "Outfit", Helvetica;
     font-size: 22px;
@@ -410,11 +473,11 @@
     line-height: normal;
     position: absolute;
     text-align: center;
-    top: 31px;
-    width: 191px;
+    top: 40px;
+    width: 200px;
   }
   
-  .home .home-about {
+  .app .home-page-about-page {
     color: #ffffff;
     font-family: "Outfit", Helvetica;
     font-size: 16px;
@@ -427,20 +490,20 @@
     width: 69px;
   }
   
-  .home .email-linkedin {
+  .app .email-linkedin {
     color: #ffffff;
     font-family: "Outfit", Helvetica;
     font-size: 16px;
     font-weight: 400;
-    left: 790px;
+    left: 400px;
     letter-spacing: 0;
     line-height: 31px;
     position: absolute;
-    top: 51px;
+    top: 70px;
     width: 74px;
   }
   
-  .home .text-wrapper-15 {
+  .app .text-wrapper-15 {
     color: #ffffff;
     font-family: "Outfit", Helvetica;
     font-size: 16px;
@@ -453,15 +516,159 @@
     width: 113px;
   }
   
-  .home .text-wrapper-16 {
+  .app .text-wrapper-16 {
     color: #ffffff;
     font-family: "Outfit", Helvetica;
     font-size: 16px;
     font-weight: 600;
-    left: 790px;
+    left: 400px;
     letter-spacing: 0;
     line-height: normal;
     position: absolute;
-    top: 31px;
+    top: 45px;
     width: 128px;
+  }
+  .app .chart-temp{
+    height: 500px;
+    width: 930px;
+    /* margin-left: 400px; */
+    background-color: white;
+    /* margin-top: 900px; */
+    top: 900px;
+    left: 470px;
+    position: absolute;
+    border-radius: 50px;
+  }
+  .app .chart-temp-ratio{
+    width: 800px;
+    height: 500px;
+    position: absolute;
+    top: 50px;
+    left: 75px;
+    
+  }
+  .app .temp-wrapper{
+    height: 300px;
+    width: 530px;
+    position: absolute;
+    top: 0;
+  }
+  .app .humid-wrapper{
+    height: 300px;
+    width: 530px;
+    position: absolute;
+    top: 0;
+  }
+  .app .gas-wrapper{
+    height: 300px;
+    width: 530px;
+    position: absolute;
+    top: 0;
+  }
+  .app .ashe-wrapper{
+    height: 300px;
+    width: 530px;
+    position: absolute;
+    top: 0;
+  }
+  .app .chart-humid{
+    height: 300px;
+    width: 530px;
+    left: 950px;
+    top: 900px;
+    position: absolute;
+    background-color: white;
+    border-radius: 50px;
+  }
+  .app .chart-humid-ratio{
+    width: 400px;
+    height: 200px;
+    position: absolute;
+    top: 50px;
+    left: 75px;
+  }
+  .app .chart-gas{
+    height: 300px;
+    width: 530px;
+    background-color: white;
+    top: 1225px;
+    left: 400px;
+    position: absolute;
+    border-radius: 50px;
+  }
+  .app .chart-gas-ratio{
+    width: 400px;
+    height: 200px;
+    position: absolute;
+    top: 50px;
+    left: 75px;
+  }
+  .app .chart-ashe{
+    height: 300px;
+    width: 530px;
+    left: 950px;
+    top: 1225px;
+    position: absolute;
+    background-color: white;
+    border-radius: 50px;
+  }
+  .app .chart-ashe-ratio{
+    width: 400px;
+    height: 200px;
+    position: absolute;
+    top: 50px;
+    left: 75px;
+  }
+  .app .link-git{
+    text-decoration: none;
+    color: white;
+    transition: .25s ease;
+  }
+  .app .link-git:hover{
+    letter-spacing: 1px;
+  }
+  .app .link-fb{
+    text-decoration: none;
+    color: white;
+    transition: .25s ease;
+  }
+  .app .link-fb:hover{
+    letter-spacing: 1px;
+  }
+  .app .link-linkedin{
+    text-decoration: none;
+    color: white;
+    transition: .25s ease;
+  }
+  .app .link-linkedin:hover{
+    letter-spacing: 1px;
+  }
+  .app .MuiFormControl-root,.css-1nrlq1o-MuiFormControl-root{
+    left: 600px;
+    bottom: 150px;
+  }
+  .app .MuiFormLabel-root,.MuiInputLabel-root,.MuiInputLabel-formControl,.MuiInputLabel-animated,.MuiInputLabel-shrink,.MuiInputLabel-standard,.MuiFormLabel-colorPrimary,.MuiInputLabel-root,.MuiInputLabel-formControl,.MuiInputLabel-animated,.MuiInputLabel-shrink,.MuiInputLabel-standard,.css-1c2i806-MuiFormLabel-root-MuiInputLabel-root{
+    color: white;
+  }
+  .app .MuiSvgIcon-root,.MuiSvgIcon-fontSizeMedium,.css-i4bv87-MuiSvgIcon-root{
+    color: white;
+  }
+  .app .MuiInputBase-input,.MuiInput-input,.MuiInputBase-inputAdornedStart,.css-1x51dt5-MuiInputBase-input-MuiInput-input{
+    color: white;
+  }
+  .app .wrap-submit{
+    background-color: white;
+    height: 30px;
+    width: 60px;
+    border-radius: 10px;
+    left: 900px;
+    bottom: 200px;
+    position: relative;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  .app .wrap-submit:hover{
+    transform: scale(1.05);
+  }
+  .app .textinput{
+    color: white;
   }

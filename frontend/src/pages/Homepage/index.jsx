@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import "./style.css";
 import { Button } from "@mui/material";
-import LineChartTemp from "./components/LineChartTemp";
-import { TempDemoData } from "./Data";
+import LineChartTemp from "../../components/LineChartTemp";
+import { TempDemoData } from "../../Data";
 import Box from '@mui/material/Box';
 import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';

@@ -5,7 +5,7 @@ import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
-import TextField from '@mui/material/TextField';
+
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { Button } from "@mui/material";
 import { useState } from 'react';
@@ -33,14 +33,6 @@ const Login = () => {
         <div className="login">
             <div className="overlap-wrapper">
                 <div className="overlap">
-                    <div className="overlap-group">
-                        <div className="ellipse" />
-                        <div className="div" />
-                        <div className="rectangle" />
-                        <div className="home">
-                            <a className="text-wrapper" href="">LOGIN</a>
-                        </div>
-                    </div>
                     <div className="overlap-2">
                         <div className="ellipse-2" />
                         <div className="ellipse-3" />
@@ -80,7 +72,7 @@ const Login = () => {
                         <img className="img-login" alt="Object other" src="object-other-12.png" />
                         <div className="login-box" />
                         <div className="signin-option">
-                        <a class="button google" href="">Sign in with Google</a>
+                        <a class="button google" href="/home">Sign in with Google</a>
                         </div>
                     </div>
                     <div className="text-wrapper-4">LOGIN</div>
