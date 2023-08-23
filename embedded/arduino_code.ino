@@ -1,27 +1,29 @@
+
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include "DHT.h"
 // Khai báo pin của các thiết bị
-#define RED 14
+#define RED 0
 #define YELLOW 2
-#define GREEN 13
+#define GREEN 14
 #define BUTTON 12
-#define BUZZER 14
-#define GAS 13
-#define FLAME 13
+#define BUZZER 13
+#define GAS 5
+#define FLAME 
 #define DHT_PIN 4
 
 // LCD
 LiquidCrystal_I2C lcd(0x27,20,4);
 // Buzzer
-float sinVal = (sin(180*(3.1412/180)));
+float sinVal = (sin(10*(3.1412/180)));
 int toneVal = 2000+(int(sinVal*1000));
 // DHT 11
 DHT dht(DHT_PIN, DHT11);
 // Kiểm tra nút có được nhấn hay không?
-bool isPress = 0;
-// đếm số lần bấm nút
-int count_press = 0
+int count_press = 0;   // số lần button được nhấn
+int button_state = 0;         // trạng thái hiện tại của button
+int lastButtonState = 0;     // trạng thái trước đó của button
+
 
 
 float readTemp()
@@ -36,13 +38,13 @@ float readHumid()
   return dht.readHumidity();
 }
 
-bool isGas()
+int isGas()
 {
   bool gas = digitalRead(GAS);
   // Cảm biến gas trả về False khi phát hiện gas và ngược lại nên điều này dễ gây nhầm lẫn. Vì vậy trả về "!gas" để tránh nhầm lẫn!!!
   return !gas;
 }
-
+/*
 bool isFlame()
 {
   bool flame = digitalRead(FLAME);
@@ -71,14 +73,16 @@ int check_state()
   if(temp > 40 && humid < 30)
     return YELLOW;
   return GREEN
-}
+}*/
 
 void on_off_emergency_state()
 {
   // Số lần bấm nút là lẻ thì bật chế độ báo động
   if(count_press % 2 != 0)
   {
+    //Serial.println("Buzzer");
     digitalWrite(RED, HIGH);
+    //Serial.println("haha");
     tone(BUZZER, toneVal);
     digitalWrite(GREEN, LOW);
     digitalWrite(YELLOW, LOW);
@@ -86,6 +90,7 @@ void on_off_emergency_state()
   // Số lần bấm là chẵn thì tắt chế độ này
   else
   {
+    //Serial.println("hoho");
     digitalWrite(RED, LOW);
     digitalWrite(YELLOW, LOW);
     noTone(BUZZER);
@@ -93,7 +98,7 @@ void on_off_emergency_state()
   }
 }
 
-void print_to_lcd()
+/*void print_to_lcd()
 {
   // Đọc các sensor
   float temp = readTemp();
@@ -131,22 +136,22 @@ void print_to_lcd()
   lcd.print(g);
   lcd.setCursor(0, 3);
   lcd.print(f);
-}
+}*/
 
 void setup() {
   Serial.begin(9600);
   // put your setup code here, to run once:
-  pinMode (FLAME, INPUT);
-  pinMode (GAS, INPUT);
+  //pinMode (FLAME, INPUT);
+  //pinMode (GAS, INPUT);
   pinMode (BUTTON, INPUT);
-  pinMode (BUZZER, OUTPUT);
+  //pinMode (BUZZER, OUTPUT);
   pinMode (RED, OUTPUT);
   pinMode (GREEN, OUTPUT);
   pinMode (YELLOW, OUTPUT);
   // LCD 20x4
-  lcd.init();       //Khởi động màn hình. Bắt đầu cho phép Arduino sử dụng màn hình
+  /*lcd.init();       //Khởi động màn hình. Bắt đầu cho phép Arduino sử dụng màn hình
   lcd.backlight();   //Bật đèn nền
-  lcd.noCursor();
+  lcd.noCursor();*/
   // dht11 sensor
   dht.begin();
 }
@@ -157,8 +162,12 @@ void setup() {
 // Còn nếu buzzer kêu vì nhấn nút thì chỉ tắt được khi nhấn nút thêm 1 lần nữa.
 void loop() {
   // put your main code here, to run repeatedly:
-  int state = check_state();
-  if(count_press % 2 ==0)
+  //int state = check_state();
+  int state = GREEN;
+  /*Serial.print("loop ");
+  Serial.println(count_press);
+  delay(500);*/
+  /*if(count_press % 2 == 0)
   {
     // Nếu trạng thái nguy hiểm thì bật đèn đỏ, tắt các đèn còn lại và cho buzzer kêu tới khi an toàn
     if (state == RED)
@@ -166,7 +175,7 @@ void loop() {
       digitalWrite(RED, HIGH);
       digitalWrite(YELLOW, LOW);
       digitalWrite(GREEN, LOW);
-      tone(BUZZER, toneVal);
+      //tone(BUZZER, toneVal);
     }
     // Nếu trạng thái cảnh báo, sẽ bật đèn vàng và tắt các đèn khác, cho buzzer kêu trong 3s
     else if (state == YELLOW)
@@ -174,7 +183,7 @@ void loop() {
       digitalWrite(YELLOW, HIGH);
       digitalWrite(RED, LOW);
       digitalWrite(GREEN, LOW);
-      tone(BUZZER, toneVal, 3000);
+      //tone(BUZZER, toneVal, 3000);
     }
     // Trạng thái an toàn thì bật đèn xanh, các đèn khác tắt, buzzer không kêu
     else if (state == GREEN)
@@ -182,25 +191,30 @@ void loop() {
       digitalWrite(YELLOW, LOW);
       digitalWrite(RED, LOW);
       digitalWrite(GREEN, HIGH);
-      notTone(BUZZER);
+      //notTone(BUZZER);
     }
-  }
-  int state_button = digitalRead(BUTTON);
+  }*/
+
+  
+  int button_state = digitalRead(BUTTON);
   // Kiểm tra số lần bấm nút, đè nút thì vẫn chỉ tính là 1 lần bấm nút
   // Nếu buzzer đang reo không phải do bấm thì việc bấm nút sẽ không tính là một lần bấm
-  if(state_button != isPress)
+  if(button_state != lastButtonState)
   {
-    if(isPress == 0 && state == GREEN)
+    if(button_state == HIGH && state == GREEN)
     {
-      isPress = 1;
+      //isPress = 1;
       count_press ++;
     }
-    else if(isPress == 1 && state == GREEN)
+    else if(button_state == LOW && state == GREEN)
     {
-      isPress = 0;
+      //isPress = 0;
     }
   }
+  lastButtonState = button_state;
   on_off_emergency_state();
-
-  print_to_lcd();
+  //print_to_lcd();
+  Serial.println(readTemp());
+  //Serial.println(readHumid());
+  Serial.println(isGas());
 }
