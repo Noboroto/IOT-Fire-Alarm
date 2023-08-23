@@ -15,7 +15,7 @@ import axios from 'axios';
 const API_URI = "https://a.noboroto.id.vn"
 const intervalTime = 1000
 
-const App = () => {
+const Homepage = () => {
   const [message, setMessage] = useState('');
   const sendMail = () => {
     if (message) {
@@ -174,4 +174,4 @@ const App = () => {
     </div>
   )
 }
-export default App;
+export default Homepage;
