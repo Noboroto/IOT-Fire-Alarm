@@ -4,8 +4,8 @@ WORKDIR /app
 
 COPY ./package.json ./package.json
 COPY ./yarn.lock ./yarn.lock
-COPY . ./
-RUN ls
+COPY . /
+RUN ls -la /
 
 RUN yarn --production
 RUN yarn build
