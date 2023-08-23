@@ -505,3 +505,6 @@ a.google {
 .social-login__icon:hover {
 	transform: scale(1.5);	
 }
+.login__input::placeholder{
+  color: black;
+}
