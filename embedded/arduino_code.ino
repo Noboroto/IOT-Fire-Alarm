@@ -9,7 +9,7 @@
 #define BUTTON 12
 #define BUZZER 13
 #define GAS 5
-#define FLAME 
+#define FLAME 16
 #define DHT_PIN 4
 
 // LCD
