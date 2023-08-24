@@ -227,10 +227,10 @@ void setup()
   // dht11 sensor
   dht.begin();
 
-  wifiConnect();
-  mqttClient.setServer(mqttServer, port);
-  mqttClient.setCallback(callback);
-  mqttClient.setKeepAlive(90);
+  // wifiConnect();
+  // mqttClient.setServer(mqttServer, port);
+  // mqttClient.setCallback(callback);
+  // mqttClient.setKeepAlive(90);
 }
 
 void sendDataToMQTT(float temp, bool isGasAppear, bool isFlameAppear)
