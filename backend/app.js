@@ -1,66 +1,103 @@
 const express = require("express")
 const fs = require("fs")
 const cors = require('cors');
+const axios = require ('axios');
+const mqtt = require ('mqtt');
+const client = mqtt.connect("mqtt://broker.hivemq.com")
 
-const DATA_LIMIT = 20;
-const TEMP_DATA_PATH = "./data.json";
+const DB_TEMP_WRITE = "https://api.thingspeak.com/update?api_key=WYTGIQ1IUL05USJA&field1="
+const DB_TEMP_READ = "https://api.thingspeak.com/channels/2250106/fields/1.json?api_key=77GA6KJB9SQT46DZ&results=20"
+
+const DB_GAS_WRITE = "https://api.thingspeak.com/update?api_key=WYTGIQ1IUL05USJA&field2="
+const DB_GAS_READ = "https://api.thingspeak.com/channels/2250106/fields/2.json?api_key=77GA6KJB9SQT46DZ&results=1"
+
+const DB_FLAME_WRITE = "https://api.thingspeak.com/update?api_key=WYTGIQ1IUL05USJA&field3="
+const DB_FLAME_READ = "https://api.thingspeak.com/channels/2250106/fields/3.json?api_key=77GA6KJB9SQT46DZ&results=1"
+
+let flameStatus = 0
+let gasStatus = 0
+
 const app = express();
-const readMinutesStep = 1;
+client.on("connect", () => {
+    client.subscribe("21127469/emergency");
+    client.subscribe("21127469/temperature");
+    client.subscribe("21127469/gas");
+    client.subscribe("21127469/flame");
+});
 
-const getCurrentTime = () => new Date().toLocaleTimeString('en-US', {
+client.on('message', (topic, message) => {
+    console.log(`${topic} - ${message}`)
+    switch(topic)
+    {
+        case "21127469/temperature":
+            axios.get(`${DB_TEMP_WRITE}${Number(message)}`);
+            break;
+        case "21127469/gas":
+            gasStatus = Number(message);
+            break;
+        case "21127469/flame":
+            flameStatus = Number(message);
+            break;
+    }
+})
+
+const getDateFromString = (str) => new Date(str).toLocaleTimeString('en-UK', {
     day: "2-digit",
     month: "2-digit",
     year: "2-digit",
     hour12: false,
     hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit"
+    minute: "2-digit"
 });
 
-const receiveMQTT = () => {
-    const tempData = JSON.parse(fs.readFileSync(TEMP_DATA_PATH));
-
-    if (tempData.length == 0)
-    {
-        tempData.push(
-            {
-                "time": getCurrentTime().toString(),
-                "rate": Math.floor(Math.random() * (40 - 20) + 20)
-            }
-        )
-        fs.writeFileSync(TEMP_DATA_PATH, JSON.stringify(tempData))
-        return;
-    }
-
-    const lastItem = tempData[tempData.length - 1];
-    if (tempData.length >= DATA_LIMIT) {
-        tempData.shift();
-    }
-    tempData.push(
-        {
-            "time": getCurrentTime().toString(),
-            "rate": Math.floor(Math.random() * (40 - 20) + 20)
-        }
-    )
-    fs.writeFileSync(TEMP_DATA_PATH, JSON.stringify(tempData))
-}
-
-var receiveMQTTInterval = setInterval(receiveMQTT, Number(readMinutesStep * 60000));
-fs.writeFileSync(TEMP_DATA_PATH, "[]");
 
 app.use(cors({
     origin: '*'
 }));
 
 app.get('/', (req, res) => res.send('Hello World!'));
-app.get('/temperature', (req, res) => {
-    receiveMQTT();
-    console.log("/temperature");
-    res.json(fs.readFileSync(TEMP_DATA_PATH, { encoding: "utf-8" }));
+
+app.get('/temperature', async (req, res) => {
+    const { data: response } = await axios.get(DB_TEMP_READ);
+    
+    const payload = response.feeds.map((obj) => {
+        return {
+            time: getDateFromString(obj["created_at"]),
+            rate: Number(obj["field1"])
+        }
+    })
+    console.log("temp-fetch");
+    res.json(JSON.stringify(payload));
 });
 
-app.get('/stopReceive', function () {
+app.get('/gas', async (req, res) => {
+    console.log(`gas ${gasStatus}`)
+    res.json(gasStatus);
+});
+
+app.get('/flame', async (req, res) => {
+    console.log(`flame ${flameStatus}`)
+    res.json(flameStatus);
+});
+
+
+app.get('/stopReceive', () => {
     clearInterval(receiveMQTTInterval);
 });
+
+app.get('/valid', async (req, res) => {
+    if (req.query.uname === "admin" && req.query.pass === "admin")
+    {
+        res.json(JSON.stringify({ accept: true }));
+        return;
+    }
+    res.json(JSON.stringify({ accept: false }));
+});
+
+app.get('/changeemergency', (req, res) => {
+    x
+})
+
+
 
 app.listen(4000, () => console.log('App listening on port 4000'));

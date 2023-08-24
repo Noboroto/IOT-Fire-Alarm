@@ -776,6 +776,3 @@
   letter-spacing: 0;
   z-index: 9999;
 }
-.wrap-logout:hover{
-  transform: scale(1.05);
-}
