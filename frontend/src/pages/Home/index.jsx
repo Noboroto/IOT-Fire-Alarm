@@ -16,7 +16,7 @@ import store from "../../Redux/store";
 import { useNavigate } from "react-router";
 
 const API_URI = "http://localhost:4000"
-const intervalTime = 1000
+const intervalTime = 10000
 
 const Homepage = () => {
   const [message, setMessage] = useState('');
@@ -56,8 +56,11 @@ const Homepage = () => {
     }]
   })
   const [tempData, setTempData] = useState([])
+  const [currentTemp, setCurrentTemp] = useState(0)
+  const [currentGas, setCurrentGas] = useState("Bình thường")
+  const [currentFlame, setCurrentFlame] = useState("Bình thường")
 
-  const fetchData = async () => {
+  const fetchTempData = async () => {
     try {
       const { data: response } = await axios.get(`${API_URI}/temperature`);
       return response
@@ -66,14 +69,54 @@ const Homepage = () => {
     }
   }
 
+  const fetchGasData = async () => {
+    try {
+      const { data: response } = await axios.get(`${API_URI}/gas`);
+      return response
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
+  const fetchFlameData = async () => {
+    try {
+      const { data: response } = await axios.get(`${API_URI}/flame`);
+      return response
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
+
   useEffect(() => {
     var fetchInterval = setInterval(() => {
-      fetchData().then((res) => setTempData(JSON.parse(res)))
+      fetchTempData().then((res) => setTempData(JSON.parse(res)))
     }, intervalTime);
     return () => clearInterval(fetchInterval)
   }, [])
 
   useEffect(() => {
+    var fetchInterval = setInterval(() => {
+      fetchGasData().then((res) => {
+        (res > 0) ? setCurrentGas("Có gas") : setCurrentGas("Bình thường");
+      })
+    }, intervalTime);
+    return () => clearInterval(fetchInterval)
+  }, [])
+
+  useEffect(() => {
+    var fetchInterval = setInterval(() => {
+      fetchFlameData().then((res) => {
+        (res > 0) ? setCurrentFlame("Có Lửa") : setCurrentFlame("Bình thường");
+      })
+    }, intervalTime);
+    return () => clearInterval(fetchInterval)
+  }, [])
+
+  useEffect(() => {
+    if (!tempData) return;
+    if (tempData && tempData[tempData.length - 1])
+      setCurrentTemp(tempData[tempData.length - 1].rate)
     setTempChartData({
       labels: tempData.map((data) => data["time"]),
       datasets: [{
@@ -88,8 +131,13 @@ const Homepage = () => {
       }]
     })
   },[tempData])
-  const gasStatus = ["Bình thường", "Có nguy cơ"]
-  const fireStatus = ["Bình thường", "Có nguy cơ"]
+
+
+  const temperatureStatus = 0
+  const gasMsg = ["Bình thường", "Có gas"]
+  const fireMsg = ["Bình thường", "Có lửa"]
+
+
   return (
     <div className="app">
       <div className="div">
@@ -106,7 +154,7 @@ const Homepage = () => {
                 <div className="rectangle" />
                 <div className="rectangle-2" />
                 <div className="text-wrapper">Khí GAS</div>
-                <div className="gas">{gasStatus[1]}</div>
+                <div className="gas">{currentGas}</div>
               </div>
             </div>
             <img className="img" alt="Object other" src="object-other-07.png" />
@@ -120,7 +168,7 @@ const Homepage = () => {
                 <div className="rectangle" />
                 <div className="rectangle-2" />
                 <div className="text-wrapper-9">Nhiệt độ</div>
-                <div className="temperature">25°C</div>
+                <div className="temperature">{currentTemp}°C</div>
               </div>
             </div>
             <div className="overlap-fire-wrapper">
@@ -128,7 +176,7 @@ const Homepage = () => {
                 <div className="rectangle-fire" />
                 <div className="rectangle-fire-2" />
                 <div className="fireLabel">Lửa</div>
-                <div className="fire">{fireStatus[0]}</div>
+                <div className="fire">{currentFlame}</div>
               </div>
             </div>
             <h1 className="h-1">HỆ THỐNG BÁO CHÁY</h1>

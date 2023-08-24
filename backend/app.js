@@ -14,6 +14,9 @@ const DB_GAS_READ = "https://api.thingspeak.com/channels/2250106/fields/2.json?a
 const DB_FLAME_WRITE = "https://api.thingspeak.com/update?api_key=WYTGIQ1IUL05USJA&field3="
 const DB_FLAME_READ = "https://api.thingspeak.com/channels/2250106/fields/3.json?api_key=77GA6KJB9SQT46DZ&results=1"
 
+let flameStatus = 0
+let gasStatus = 0
+
 const app = express();
 client.on("connect", () => {
     client.subscribe("21127469/emergency");
@@ -23,16 +26,17 @@ client.on("connect", () => {
 });
 
 client.on('message', (topic, message) => {
+    console.log(`${topic} - ${message}`)
     switch(topic)
     {
         case "21127469/temperature":
             axios.get(`${DB_TEMP_WRITE}${Number(message)}`);
             break;
         case "21127469/gas":
-            axios.get(`${DB_GAS_WRITE}${Number(message)}`);
+            gasStatus = Number(message);
             break;
         case "21127469/flame":
-            axios.get(`${DB_FLAME_WRITE}${Number(message)}`);
+            flameStatus = Number(message);
             break;
     }
 })
@@ -59,24 +63,21 @@ app.get('/temperature', async (req, res) => {
     const payload = response.feeds.map((obj) => {
         return {
             time: getDateFromString(obj["created_at"]),
-            rate: Math.floor(Number(obj["field1"]))
+            rate: Number(obj["field1"])
         }
     })
+    console.log("temp-fetch");
     res.json(JSON.stringify(payload));
 });
 
 app.get('/gas', async (req, res) => {
-    const { data: response } = await axios.get(DB_GAS_READ);
-
-    const payload = Math.floor(Number(response.feeds[0]["field2"]))
-    res.json(payload);
+    console.log(`gas ${gasStatus}`)
+    res.json(gasStatus);
 });
 
 app.get('/flame', async (req, res) => {
-    const { data: response } = await axios.get(DB_FLAME_READ);
-
-    const payload = Math.floor(Number(response.feeds[0]["field3"]))
-    res.json(payload);
+    console.log(`flame ${flameStatus}`)
+    res.json(flameStatus);
 });
 
 
@@ -92,6 +93,10 @@ app.get('/valid', async (req, res) => {
     }
     res.json(JSON.stringify({ accept: false }));
 });
+
+app.get('/changeemergency', (req, res) => {
+    x
+})
 
 
 
