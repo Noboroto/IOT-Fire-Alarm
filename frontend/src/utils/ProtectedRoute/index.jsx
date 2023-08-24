@@ -1,15 +1,14 @@
 import React from 'react'
 import { useSelector } from "react-redux"
-import { Navigate, useLocation } from "react-router-dom"
+import Login from '../../pages/Login';
 
 const ProtectedRoute = ({ children }) => {
     const user = useSelector((state) => state.user);
-    let location = useLocation();
 
     if (!user.isAuthenticated) {
-        return <Navigate to="/login" state={{ from: location }} replace />
+        return <Login/>
     }
-    return <h2>{JSON.stringify(user.user)}</h2>
+    return children
 };
 
 export default ProtectedRoute;
