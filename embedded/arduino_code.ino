@@ -89,7 +89,7 @@ void mqttConnect()
     if (mqttClient.connect(clientId.c_str()))
     {
       lcdPrint("MQTT Connected");
-      mqttClient.subscribe("21127469/remote-emergency");
+      mqttClient.subscribe("21127469/press_emergency");
     }
     else
     {
@@ -111,7 +111,7 @@ void callback(char *topic, byte *message, unsigned int length)
   }
 
   //***Code here to process the received package***
-  if (!strcmp(topic, "21127469/remote-emergency"))
+  if (!strcmp(topic, "21127469/press_emergency"))
   {
     changeEmergencyState(EMERGENCY_BY_USER);
   }

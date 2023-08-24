@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from 'react-dom/client';
 
-import Login from "./pages/Login";
+import NotPermit from "./pages/NotPermit";
 import Homepage from "./pages/Home"
 import NotFound from "./pages/NotFound"
 import store from './Redux/store'
@@ -21,6 +21,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                         <ProtectedRoute>
                             <Homepage />
                         </ProtectedRoute>}/>
+                    <Route path="notpermit" element={
+                        <NotPermit />
+                    } />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </BrowserRouter>

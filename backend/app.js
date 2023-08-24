@@ -1,5 +1,4 @@
 const express = require("express")
-const fs = require("fs")
 const cors = require('cors');
 const axios = require ('axios');
 const mqtt = require ('mqtt');
@@ -8,14 +7,33 @@ const client = mqtt.connect("mqtt://broker.hivemq.com")
 const DB_TEMP_WRITE = "https://api.thingspeak.com/update?api_key=WYTGIQ1IUL05USJA&field1="
 const DB_TEMP_READ = "https://api.thingspeak.com/channels/2250106/fields/1.json?api_key=77GA6KJB9SQT46DZ&results=20"
 
-const DB_GAS_WRITE = "https://api.thingspeak.com/update?api_key=WYTGIQ1IUL05USJA&field2="
-const DB_GAS_READ = "https://api.thingspeak.com/channels/2250106/fields/2.json?api_key=77GA6KJB9SQT46DZ&results=1"
-
-const DB_FLAME_WRITE = "https://api.thingspeak.com/update?api_key=WYTGIQ1IUL05USJA&field3="
-const DB_FLAME_READ = "https://api.thingspeak.com/channels/2250106/fields/3.json?api_key=77GA6KJB9SQT46DZ&results=1"
+const NOTICE_API = "https://maker.ifttt.com/trigger/emergency/with/key/RGl1gJEJt7lM8R9u7WVZE"
 
 let flameStatus = 0
 let gasStatus = 0
+let isEmergency = 0
+let tempArr = []
+
+const updateTemp = () => {
+    axios.get(DB_TEMP_READ)
+        .then((response) => {
+            tempArr = response.data.feeds.map((obj) => {
+                return {
+                    time: getDateFromString(obj["created_at"]),
+                    rate: Number(obj["field1"])
+                }
+            })
+        })
+        .catch((err) => console.error(err));
+}
+
+const sendNotice = (sender) => {
+    axios.post(NOTICE_API, {
+        value1: sender
+    })
+}
+
+updateTemp();
 
 const app = express();
 client.on("connect", () => {
@@ -31,12 +49,29 @@ client.on('message', (topic, message) => {
     {
         case "21127469/temperature":
             axios.get(`${DB_TEMP_WRITE}${Number(message)}`);
+            updateTemp();
             break;
         case "21127469/gas":
             gasStatus = Number(message);
             break;
         case "21127469/flame":
             flameStatus = Number(message);
+            break;
+        case "21127469/emergency":
+            isEmergency = Number(message);
+            switch (isEmergency)
+            {
+                default:
+                    break;
+                case 1:
+                    sendNotice("button");
+                    break;
+                case 2:
+                    sendNotice("sensor");
+                    break;
+                case 3:
+                    break;
+            }
             break;
     }
 })
@@ -58,31 +93,18 @@ app.use(cors({
 app.get('/', (req, res) => res.send('Hello World!'));
 
 app.get('/temperature', async (req, res) => {
-    const { data: response } = await axios.get(DB_TEMP_READ);
-    
-    const payload = response.feeds.map((obj) => {
-        return {
-            time: getDateFromString(obj["created_at"]),
-            rate: Number(obj["field1"])
-        }
-    })
-    console.log("temp-fetch");
-    res.json(JSON.stringify(payload));
+    // console.log("temp-fetch");
+    res.json(JSON.stringify(tempArr));
 });
 
 app.get('/gas', async (req, res) => {
-    console.log(`gas ${gasStatus}`)
+    // console.log(`gas ${gasStatus}`)
     res.json(gasStatus);
 });
 
 app.get('/flame', async (req, res) => {
-    console.log(`flame ${flameStatus}`)
+    // console.log(`flame ${flameStatus}`)
     res.json(flameStatus);
-});
-
-
-app.get('/stopReceive', () => {
-    clearInterval(receiveMQTTInterval);
 });
 
 app.get('/valid', async (req, res) => {
@@ -94,10 +116,18 @@ app.get('/valid', async (req, res) => {
     res.json(JSON.stringify({ accept: false }));
 });
 
-app.get('/changeemergency', (req, res) => {
-    x
+app.get('/press_emergency', (req, res) => {
+    client.publish("21127469/press_emergency", req.query.emergency.toString());
+    console.log(`press_emergency ${req.query.emergency}`);
+    if (req.query.emergency > 0)
+    {
+        sendNotice("user");
+    }
+    res.json(JSON.stringify({ accept: req.query.emergency > 0 }));
 })
 
-
+app.get('/emergency', async (req, res) => {
+    res.json(isEmergency);
+});
 
 app.listen(4000, () => console.log('App listening on port 4000'));

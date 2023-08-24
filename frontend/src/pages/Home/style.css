@@ -442,8 +442,17 @@
   width: 316px;
 }
 
-.app .overlap-4 {
+.app .overlap-active {
   background-color: #ff0000;
+  border-radius: 55px;
+  height: 79px;
+  position: absolute;
+  width: 316px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.app .overlap-inactive {
+  background-color: #037d50;
   border-radius: 55px;
   height: 79px;
   position: absolute;

@@ -9,7 +9,6 @@ import FormControl from '@mui/material/FormControl';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { Button } from "@mui/material";
 import { useState } from 'react';
-
 import { login } from "../../Redux/Slice/User";
 import store from "../../Redux/store";
 import { useNavigate } from "react-router";
@@ -31,36 +30,6 @@ const checkPass = async (uname, pass) => {
     }
 
 const Login = () => {
-
-
-
-    // For error message
-    const [errorMessages, setErrorMessages] = useState({});
-    const [isSubmitted, setIsSubmitted] = useState(false);
-
-    const database = [
-        {
-            username: "user1",
-            password: "pass1"
-        },
-        {
-            username: "user2",
-            password: "pass2"
-        },
-        {
-            username: "admin",
-            password: "admin"
-        }
-    ];
-
-    const errors = {
-        uname: "invalid username",
-        pass: "invalid password"
-    };
-    const renderErrorMessage = (name) =>
-        name === errorMessages.name && (
-            <div className="error">{errorMessages.message}</div>
-        );
     const [message, setMessage] = useState('');
     const navigate = useNavigate()
 
@@ -81,24 +50,14 @@ const Login = () => {
     const handleSubmit = (event) => {
         // Prevent page reload
         event.preventDefault();
-
-        // Find user login info
-        const userData = database.find((user) => user.username === uname);
-
+        // Check if user info is valid
         checkPass(uname, pass).then((res) => {
             // Compare user info
-            if (userData) {
-                if (userData.password !== pass) {
-                    // Invalid password
-                    setErrorMessages({ name: "pass", message: errors.pass });
-                } else {
-                    setIsSubmitted(true);
-                    store.dispatch(login());
-                    navigate('/');
-                }
+            if (res) {
+                store.dispatch(login());
+                navigate('/');
             } else {
-                // Username not found
-                setErrorMessages({ name: "uname", message: errors.uname });
+                navigate('/notpermit');    
             }
         })
     };
@@ -116,6 +75,7 @@ const Login = () => {
         setMessage(event.target.value);
         console.log('value is: ', event.target.value);
     }
+    
     return (
         <div className="login">
             <div className="overlap-wrapper">

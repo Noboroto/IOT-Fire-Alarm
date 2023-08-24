@@ -15,11 +15,17 @@ import { logout } from "../../Redux/Slice/User";
 import store from "../../Redux/store";
 import { useNavigate } from "react-router";
 
+const BUTTON_ACTIVE_MESSAGE = "KÍCH HOẠT BÁO CHÁY";
+const BUTTON_INACTIVE_MESSAGE = "HỦY BÁO CHÁY";
 const API_URI = "http://localhost:4000"
-const intervalTime = 10000
+const intervalTime = 10
 
 const Homepage = () => {
   const [message, setMessage] = useState('');
+  const [buttonText, setButtonText] = useState(BUTTON_ACTIVE_MESSAGE);
+  const [canClick, setCanClick] = useState(true);
+  const [backgroundTemplate, setBackgroundTemplate] = useState('overlap-active')
+
   const navigate = useNavigate()
   const sendMail = () => {
     if (message) {
@@ -30,6 +36,24 @@ const Homepage = () => {
       window.open(gmailURL, '_blank');
     }
   }
+
+  const handleActiveClick = event => {
+    event.preventDefault();
+    if (canClick) {
+      axios.get(`${API_URI}/press_emergency`, {
+        params: {
+          emergency: 3
+        }
+      })
+    } else {
+      axios.get(`${API_URI}/press_emergency`, {
+        params: {
+          emergency: 0
+        }
+      })
+    }
+  };
+
   const handleLogoutClick = event => {
     event.preventDefault();
     store.dispatch(logout());
@@ -41,7 +65,7 @@ const Homepage = () => {
     setMessage(event.target.value);
     console.log('value is: ', event.target.value);
   }
-  
+
   const [tempChartData, setTempChartData] = useState({
     labels: TempDemoData.map((data) => data["time"]),
     datasets: [{
@@ -55,6 +79,7 @@ const Homepage = () => {
       },
     }]
   })
+
   const [tempData, setTempData] = useState([])
   const [currentTemp, setCurrentTemp] = useState(0)
   const [currentGas, setCurrentGas] = useState("Bình thường")
@@ -87,8 +112,17 @@ const Homepage = () => {
     }
   }
 
+  const fetchEmergencyData = async () => {
+    try {
+      const { data: response } = await axios.get(`${API_URI}/emergency`);
+      return response
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
 
   useEffect(() => {
+    fetchTempData().then((res) => setTempData(JSON.parse(res)))
     var fetchInterval = setInterval(() => {
       fetchTempData().then((res) => setTempData(JSON.parse(res)))
     }, intervalTime);
@@ -96,6 +130,37 @@ const Homepage = () => {
   }, [])
 
   useEffect(() => {
+    fetchEmergencyData().then((res) => {
+      if (res === 0) {
+        setButtonText(BUTTON_ACTIVE_MESSAGE);
+        setCanClick(true);
+        setBackgroundTemplate('overlap-active')
+      } else {
+        setButtonText(BUTTON_INACTIVE_MESSAGE);
+        setCanClick(false);
+        setBackgroundTemplate('overlap-inactive')
+      }
+    })
+    var fetchInterval = setInterval(() => {
+      fetchEmergencyData().then((res) => {
+        if (res === 0) {
+          setButtonText(BUTTON_ACTIVE_MESSAGE);
+          setCanClick(true);
+          setBackgroundTemplate('overlap-active')
+        } else {
+          setButtonText(BUTTON_INACTIVE_MESSAGE);
+          setCanClick(false);
+          setBackgroundTemplate('overlap-inactive')
+        }
+      })
+    }, intervalTime);
+    return () => clearInterval(fetchInterval)
+  }, [])
+
+  useEffect(() => {
+    fetchGasData().then((res) => {
+      (res > 0) ? setCurrentGas("Có gas") : setCurrentGas("Bình thường");
+    })
     var fetchInterval = setInterval(() => {
       fetchGasData().then((res) => {
         (res > 0) ? setCurrentGas("Có gas") : setCurrentGas("Bình thường");
@@ -105,6 +170,9 @@ const Homepage = () => {
   }, [])
 
   useEffect(() => {
+    fetchFlameData().then((res) => {
+      (res > 0) ? setCurrentFlame("Có Lửa") : setCurrentFlame("Bình thường");
+    })
     var fetchInterval = setInterval(() => {
       fetchFlameData().then((res) => {
         (res > 0) ? setCurrentFlame("Có Lửa") : setCurrentFlame("Bình thường");
@@ -130,13 +198,7 @@ const Homepage = () => {
         },
       }]
     })
-  },[tempData])
-
-
-  const temperatureStatus = 0
-  const gasMsg = ["Bình thường", "Có gas"]
-  const fireMsg = ["Bình thường", "Có lửa"]
-
+  }, [tempData])
 
   return (
     <div className="app">
@@ -191,8 +253,8 @@ const Homepage = () => {
             </div>
           </div>
           <div className="group-2">
-            <div className="overlap-4">
-              <Button className="alarmButton">KÍCH HOẠT BÁO CHÁY</Button>
+            <div className={backgroundTemplate}>
+              <Button onClick={handleActiveClick} className="alarmButton">{buttonText}</Button>
             </div>
           </div>
         </div>
