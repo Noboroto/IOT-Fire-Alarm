@@ -15,23 +15,24 @@ import store from "../../Redux/store";
 import { useNavigate } from "react-router";
 import axios from "axios";
 
-const API_URI = "http://localhost:4000"
-
-const Login = () => {
-
-    const checkPass = async (uname, pass) => {
+const API_URI = "http://localhost:4000"    
+const checkPass = async (uname, pass) => {
         try {
             const { data: response } = await axios.get(`${API_URI}/valid`, {
                 params:{
-                    uname: uname,
-                    pass: pass
+                    uname,
+                    pass
                 }
             });
-            return response
+            return JSON.parse(response)["accept"]
         } catch (error) {
             console.error(error.message);
         }
     }
+
+const Login = () => {
+
+
 
     // For error message
     const [errorMessages, setErrorMessages] = useState({});
@@ -84,21 +85,22 @@ const Login = () => {
         // Find user login info
         const userData = database.find((user) => user.username === uname);
 
-        checkPass(uname, pass)
-        // Compare user info
-        if (userData) {
-            if (userData.password !== pass) {
-                // Invalid password
-                setErrorMessages({ name: "pass", message: errors.pass });
+        checkPass(uname, pass).then((res) => {
+            // Compare user info
+            if (userData) {
+                if (userData.password !== pass) {
+                    // Invalid password
+                    setErrorMessages({ name: "pass", message: errors.pass });
+                } else {
+                    setIsSubmitted(true);
+                    store.dispatch(login());
+                    navigate('/');
+                }
             } else {
-                setIsSubmitted(true);
-                store.dispatch(login());
-                navigate('/');
+                // Username not found
+                setErrorMessages({ name: "uname", message: errors.uname });
             }
-        } else {
-            // Username not found
-            setErrorMessages({ name: "uname", message: errors.uname });
-        }
+        })
     };
     const sendMail = () => {
         if (message) {
