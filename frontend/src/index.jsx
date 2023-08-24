@@ -6,6 +6,7 @@ import Homepage from "./pages/Home"
 import NotFound from "./pages/NotFound"
 import store from './Redux/store'
 import { Provider } from 'react-redux';
+import ProtectedRoute from "./utils/ProtectedRoute";
 
 
 import { Routes, Route, BrowserRouter } from 'react-router-dom'
@@ -17,10 +18,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Login />} />
+                    <Route path="/login" element={<Login />} />
                     <Route path="/home" element={
-                        <requireAuth isAuthed={false}>
+                        <ProtectedRoute>
                             <Homepage />
-                        </requireAuth>} />
+                        </ProtectedRoute>}/>
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </BrowserRouter>

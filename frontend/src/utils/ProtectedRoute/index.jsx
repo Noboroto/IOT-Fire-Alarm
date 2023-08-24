@@ -6,11 +6,10 @@ const ProtectedRoute = ({ children }) => {
     const user = useSelector((state) => state.user);
     let location = useLocation();
 
-    if (!user.state.isAuthenticated) {
+    if (!user.isAuthenticated) {
         return <Navigate to="/login" state={{ from: location }} replace />
     }
-    return children
-
+    return <h2>{JSON.stringify(user.user)}</h2>
 };
 
 export default ProtectedRoute;
