@@ -123,6 +123,7 @@ app.get('/press_emergency', (req, res) => {
     {
         sendNotice("user");
     }
+    isEmergency = Number(req.query.emergency);
     res.json(JSON.stringify({ accept: req.query.emergency > 0 }));
 })
 
