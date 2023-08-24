@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from 'react-dom/client';
 
 import Login from "./pages/Login";
-import Homepage from "./pages/HomePage"
+import Homepage from "./pages/Home"
 import NotPermit from "./pages/NotPermit"
 import NotFound from "./pages/NotFound"
 
