@@ -3,6 +3,8 @@ services:
     build: backend
     expose:
       - "4000"
+    ports:
+      - "4000:4000"
     restart: unless-stopped
     environment:
       - VIRTUAL_HOST=a.noboroto.id.vn
@@ -14,7 +16,9 @@ services:
       - backend
     build: frontend
     expose:
-      - "80"
+      - "3000"
+    ports:
+      - "3000:3000"
     restart: unless-stopped
     environment:
       - VIRTUAL_HOST=fire.noboroto.id.vn
