@@ -26,7 +26,6 @@ const Homepage = () => {
       window.open(gmailURL, '_blank');
     }
   }
-
   const handleClick = event => {
     event.preventDefault();
     console.log('handleClick 👉️', message);
@@ -89,6 +88,11 @@ const Homepage = () => {
     <div className="app">
       <div className="div">
         <div className="overlap">
+          <div className="logout-box">
+            <div className="wrap-logout">
+              <Button className="logout-button">Log out</Button>
+            </div>
+          </div>
           <div className="overlap-group">
             <div className="ellipse" />
             <div className="group">
