@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import "./style.css";
 import { Button } from "@mui/material";
 import LineChartTemp from "../../components/LineChartTemp";
-import { TempDemoData } from "../../Data";
+import { TempDemoData } from "../../InitData";
 import Box from '@mui/material/Box';
 import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
@@ -12,7 +12,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import { useState } from 'react';
 import axios from 'axios';
 
-const API_URI = "https://a.noboroto.id.vn"
+const API_URI = "http://localhost:4000"
 const intervalTime = 1000
 
 const Homepage = () => {
@@ -26,7 +26,6 @@ const Homepage = () => {
       window.open(gmailURL, '_blank');
     }
   }
-
   const handleClick = event => {
     event.preventDefault();
     console.log('handleClick 👉️', message);
@@ -83,11 +82,17 @@ const Homepage = () => {
       }]
     })
   },[tempData])
-
+  const gasStatus = ["Bình thường", "Có nguy cơ"]
+  const fireStatus = ["Bình thường", "Có nguy cơ"]
   return (
     <div className="app">
       <div className="div">
         <div className="overlap">
+          <div className="logout-box">
+            <div className="wrap-logout">
+              <Button className="logout-button">Log out</Button>
+            </div>
+          </div>
           <div className="overlap-group">
             <div className="ellipse" />
             <div className="group">
@@ -95,7 +100,7 @@ const Homepage = () => {
                 <div className="rectangle" />
                 <div className="rectangle-2" />
                 <div className="text-wrapper">Khí GAS</div>
-                <div className="gas">Bình thường</div>
+                <div className="gas">{gasStatus[1]}</div>
               </div>
             </div>
             <img className="img" alt="Object other" src="object-other-07.png" />
@@ -117,7 +122,7 @@ const Homepage = () => {
                 <div className="rectangle-fire" />
                 <div className="rectangle-fire-2" />
                 <div className="fireLabel">Lửa</div>
-                <div className="fire">Bình thường</div>
+                <div className="fire">{fireStatus[0]}</div>
               </div>
             </div>
             <h1 className="h-1">HỆ THỐNG BÁO CHÁY</h1>
@@ -133,7 +138,7 @@ const Homepage = () => {
           </div>
           <div className="group-2">
             <div className="overlap-4">
-              <div className="alarmButton">Kích hoạt báo cháy</div>
+              <Button className="alarmButton">KÍCH HOẠT BÁO CHÁY</Button>
             </div>
           </div>
         </div>
