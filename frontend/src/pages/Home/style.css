@@ -125,12 +125,14 @@
     font-family: "Outfit", Helvetica;
     font-size: 24px;
     font-weight: 600;
-    left: 60px;
+    left: 10px;
     letter-spacing: 0;
     line-height: 27.5px;
-    position: absolute;
-    text-align: center;
+    position: relative;
     top: 110px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
     white-space: nowrap;
   }
   
@@ -319,12 +321,14 @@
     font-family: "Outfit", Helvetica;
     font-size: 24px;
     font-weight: 600;
-    left: 60px;
+    left: 10px;
     letter-spacing: 0;
     line-height: 27.5px;
-    position: absolute;
-    text-align: center;
+    position: relative;
     top: 110px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
     white-space: nowrap;
   }
   .app .text-wrapper-9 {
@@ -564,7 +568,8 @@
   .app .gas-wrapper{
     height: 300px;
     width: 530px;
-    position: absolute;
+    position: relative;
+    text-align: center;
     top: 0;
   }
   .app .ashe-wrapper{

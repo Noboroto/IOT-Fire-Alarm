@@ -83,7 +83,8 @@ const Homepage = () => {
       }]
     })
   },[tempData])
-
+  const gasStatus = ["Bình thường", "Có nguy cơ"]
+  const fireStatus = ["Bình thường", "Có nguy cơ"]
   return (
     <div className="app">
       <div className="div">
@@ -95,7 +96,7 @@ const Homepage = () => {
                 <div className="rectangle" />
                 <div className="rectangle-2" />
                 <div className="text-wrapper">Khí GAS</div>
-                <div className="gas">Bình thường</div>
+                <div className="gas">{gasStatus[1]}</div>
               </div>
             </div>
             <img className="img" alt="Object other" src="object-other-07.png" />
@@ -117,7 +118,7 @@ const Homepage = () => {
                 <div className="rectangle-fire" />
                 <div className="rectangle-fire-2" />
                 <div className="fireLabel">Lửa</div>
-                <div className="fire">Bình thường</div>
+                <div className="fire">{fireStatus[0]}</div>
               </div>
             </div>
             <h1 className="h-1">HỆ THỐNG BÁO CHÁY</h1>
