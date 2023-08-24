@@ -5,26 +5,26 @@
 #include <PubSubClient.h>
 
 // Khai báo pin của các thiết bị
-#define RED 0
-#define YELLOW 2
-#define GREEN 14
-#define BUTTON 12
-#define BUZZER 13
-#define GAS 5
-#define FLAME 16
-#define DHT_PIN 4
+#define RED 16 //D0
+#define YELLOW 1 //Tx
+#define GREEN 3 //Rx
+#define BUTTON 12 //D6
+#define BUZZER 13 // D7
+#define GAS 2 // D4
+#define FLAME 14 //D5
+#define DHT_PIN 0 //D3
 
 // Wi-fi config
 #ifndef STASSID
-#define STASSID "david0403"
-#define STAPSK "david0403"
+#define STASSID "HCMUS-C22"
+#define STAPSK "phonghoc@c22"
 #endif
 
 const char *ssid = STASSID;
 const char *password = STAPSK;
 
 // MQTT config
-const char *mqttServer = "mqtt.noboroto.id.vn";
+const char *mqttServer = "broker.hivemq.com";
 int port = 1883;
 WiFiClient wifiClient;
 PubSubClient mqttClient(wifiClient);
@@ -40,6 +40,7 @@ DHT dht(DHT_PIN, DHT11);
 int count_press = 0;     // số lần button được nhấn
 int button_state = 0;    // trạng thái hiện tại của button
 int lastButtonState = 0; // trạng thái trước đó của button
+unsigned int last_milis = 0;
 
 void wifiConnect()
 {
@@ -116,7 +117,7 @@ int isGas()
   // Cảm biến gas trả về False khi phát hiện gas và ngược lại nên điều này dễ gây nhầm lẫn. Vì vậy trả về "!gas" để tránh nhầm lẫn!!!
   return !gas;
 }
-/*
+
 bool isFlame()
 {
   bool flame = digitalRead(FLAME);
@@ -125,13 +126,8 @@ bool isFlame()
 }
 
 // Nếu trạng thái là nguy hiểm thì trả về PIN của đèn RED, trạng thái báo động thì trả về PIN của đèn YELLOW, trạng thái an toàn trả về PIN của đèn GREEN
-int check_state()
+int check_state(float temp, float humid, bool Gas, bool Flame)
 {
-  // Đọc các sensor
-  float temp = readTemp();
-  float humid = readHumid();
-  bool Gas = isGas();
-  bool Flame = isFlame();
   // có lửa thì đèn đỏ
   if (Flame)
     return RED;
@@ -139,20 +135,22 @@ int check_state()
   if (Gas && temp > 80)
     return RED;
   // phát hiện có Gas hoặc nhiệt độ lớn 60 độ C thì đèn vàng
-  if(GAS || temp > 60)
+  if(Gas || temp > 60)
     return YELLOW;
   // Nhiệt độ lớn hơn 40 độ C và độ ẩm thấp hơn 30%
   if(temp > 40 && humid < 30)
     return YELLOW;
-  return GREEN
-}*/
+  return GREEN;
+}
 
 void on_off_emergency_state()
 {
+  count_press++;
+  count_press %= 2;
   // Số lần bấm nút là lẻ thì bật chế độ báo động
   if (count_press % 2 != 0)
   {
-    mqttClient.publish("21127469/emergency", "True");
+   // mqttClient.publish("21127469/emergency", "True");
     // Serial.println("Buzzer");
     digitalWrite(RED, HIGH);
     // Serial.println("haha");
@@ -164,40 +162,40 @@ void on_off_emergency_state()
   else
   {
     // Serial.println("hoho");
-    mqttClient.publish("21127469/emergency", "False");
+    //mqttClient.publish("21127469/emergency", "False");
     digitalWrite(RED, LOW);
-    digitalWrite(YELLOW, LOW);
     noTone(BUZZER);
-    digitalWrite(GREEN, HIGH);
   }
 }
 
-/*void print_to_lcd()
+void print_to_lcd(int state, float temp, bool Gas, bool Flame)
 {
-  // Đọc các sensor
-  int state = check_state();
   // Thông điệp
+  if ((millis() - last_milis) < 1000)
+    return;
+  last_milis = millis();
+  lcd.clear();
   String t = "Temp: " + String(temp, 2);
   String g = "Gas: ";
   String f = "Flame: ";
   String s = "State: ";
-
-  if(Gas)
-    g += "FOUND";
+  
+  if(Gas){
+    g = "Gas: FOUND";}
   else
-    g += "NOT FOUND";
+    g = "Gas: NOT FOUND";
 
-  if(Flame)
-    f += "FOUND";
+  if(Flame){
+    f = "FLame: FOUND";}
   else
-    f += "NOT FOUND";
+    f = "FLame: NOT FOUND";
 
   if (state == RED)
-    s += "DANGEROUS";
+    s = "State: DANGEROUS";
   else if (state == YELLOW)
-    s += "WARNING";
+    s = "State: WARNING";
   else
-    s += "OK";
+    s = "State: OK";
 
   lcd.setCursor(0, 0);
   lcd.print(s);
@@ -207,37 +205,39 @@ void on_off_emergency_state()
   lcd.print(g);
   lcd.setCursor(0, 3);
   lcd.print(f);
-}*/
+}
 
 void setup()
 {
   Serial.begin(9600);
   // put your setup code here, to run once:
-  // pinMode (FLAME, INPUT);
-  // pinMode (GAS, INPUT);
+  pinMode (FLAME, INPUT);
+  pinMode (GAS, INPUT);
   pinMode(BUTTON, INPUT);
   // pinMode (BUZZER, OUTPUT);
   pinMode(RED, OUTPUT);
   pinMode(GREEN, OUTPUT);
   pinMode(YELLOW, OUTPUT);
   // LCD 20x4
-  /*lcd.init();       //Khởi động màn hình. Bắt đầu cho phép Arduino sử dụng màn hình
+  lcd.init();       //Khởi động màn hình. Bắt đầu cho phép Arduino sử dụng màn hình
   lcd.backlight();   //Bật đèn nền
-  lcd.noCursor();*/
+  lcd.noCursor();
   // dht11 sensor
   dht.begin();
 
-  // wifiConnect();
-  // mqttClient.setServer(mqttServer, port);
-  // mqttClient.setCallback(callback);
-  // mqttClient.setKeepAlive(90);
+  wifiConnect(); 
+  mqttClient.setServer(mqttServer, port);
+  mqttClient.setCallback(callback);
+  mqttClient.setKeepAlive(90);
+  last_milis = millis();
 }
 
 void sendDataToMQTT(float temp, bool isGasAppear, bool isFlameAppear)
 {
-  mqttClient.publish("21127469/temperature", String(temp));
-  mqttClient.publish("21127469/gas", String(isGasAppear));
-  mqttClient.publish("21127469/flame", String(isFlameAppear));
+  if (isnan(temp)) temp = 0;
+  mqttClient.publish("21127469/temperature", String(temp).c_str());
+  mqttClient.publish("21127469/gas", String(isGasAppear ? 1 : 0).c_str());
+  mqttClient.publish("21127469/flame", String(isFlameAppear ? 1 : 0).c_str());
 }
 
 // Cơ chế hoạt động: nếu buzzer kêu vì cảm biến phát hiện nguy hiểm thì việc nhấn nút sẽ không thể tác động đến buzzer, nghĩa là buzzer sẽ chỉ ngừng kêu khi cảm biến thấy không còn nguy hiểm
@@ -245,28 +245,27 @@ void sendDataToMQTT(float temp, bool isGasAppear, bool isFlameAppear)
 void loop()
 {
   // put your main code here, to run repeatedly:
-  // int state = check_state();
-  // if (!mqttClient.connected())
-  // {
-  //   mqttConnect();
-  // }
-  // mqttClient.loop();
+  if (!mqttClient.connected())
+  {
+    mqttConnect();
+  }
+  mqttClient.loop();
 
   float temp = readTemp();
+  float humid = readHumid();
   bool gas = isGas();
   bool flame = isFlame();
-  // sendDataToMQTT(temp, gas, flame);
+  if ((millis() - last_milis) >= 500)
+    sendDataToMQTT(temp, gas, flame);
 
 
-  int state = GREEN;
-  /*Serial.print("loop ");
-  Serial.println(count_press);
-  delay(500);*/
-  /*if(count_press % 2 == 0)
+  int state = check_state(temp, humid, gas, flame);
+  if(count_press % 2 == 0)
   {
     // Nếu trạng thái nguy hiểm thì bật đèn đỏ, tắt các đèn còn lại và cho buzzer kêu tới khi an toàn
     if (state == RED)
     {
+      on_off_emergency_state();
       digitalWrite(RED, HIGH);
       digitalWrite(YELLOW, LOW);
       digitalWrite(GREEN, LOW);
@@ -288,27 +287,19 @@ void loop()
       digitalWrite(GREEN, HIGH);
       //notTone(BUZZER);
     }
-  }*/
+  }
 
   int button_state = digitalRead(BUTTON);
   // Kiểm tra số lần bấm nút, đè nút thì vẫn chỉ tính là 1 lần bấm nút
   // Nếu buzzer đang reo không phải do bấm thì việc bấm nút sẽ không tính là một lần bấm
-  if (button_state != lastButtonState)
+  if (button_state != lastButtonState & button_state > 0) 
   {
-    if (button_state == HIGH && state == GREEN)
-    {
-      // isPress = 1;
-      count_press++;
-    }
-    else if (button_state == LOW && state == GREEN)
-    {
-      // isPress = 0;
-    }
+
+    on_off_emergency_state();
   }
   lastButtonState = button_state;
-  on_off_emergency_state();
-  // print_to_lcd();
-  Serial.println(readTemp());
-  // Serial.println(readHumid());
-  Serial.println(isGas());
+  Serial.println("Tester");
+ 
+  print_to_lcd(state, temp, gas, flame);
+  //Serial.println(count_press);
 }
