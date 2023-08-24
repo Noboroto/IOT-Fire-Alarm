@@ -11,12 +11,16 @@ import FormControl from '@mui/material/FormControl';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { useState } from 'react';
 import axios from 'axios';
+import { logout } from "../../Redux/Slice/User";
+import store from "../../Redux/store";
+import { useNavigate } from "react-router";
 
 const API_URI = "http://localhost:4000"
 const intervalTime = 1000
 
 const Homepage = () => {
   const [message, setMessage] = useState('');
+  const navigate = useNavigate()
   const sendMail = () => {
     if (message) {
       const emailSubject = 'Sending feedback';
@@ -26,9 +30,11 @@ const Homepage = () => {
       window.open(gmailURL, '_blank');
     }
   }
-  const handleClick = event => {
+  const handleLogoutClick = event => {
     event.preventDefault();
-    console.log('handleClick 👉️', message);
+    store.dispatch(logout());
+    console.log("logout click!");
+    navigate('/');
   };
 
   const handleChange = event => {
@@ -90,7 +96,7 @@ const Homepage = () => {
         <div className="overlap">
           <div className="logout-box">
             <div className="wrap-logout">
-              <Button className="logout-button">Log out</Button>
+              <Button onClick={handleLogoutClick} className="logout-button">Log out</Button>
             </div>
           </div>
           <div className="overlap-group">

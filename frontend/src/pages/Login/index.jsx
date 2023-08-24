@@ -13,8 +13,26 @@ import { useState } from 'react';
 import { login } from "../../Redux/Slice/User";
 import store from "../../Redux/store";
 import { useNavigate } from "react-router";
+import axios from "axios";
+
+const API_URI = "http://localhost:4000"
 
 const Login = () => {
+
+    const checkPass = async (uname, pass) => {
+        try {
+            const { data: response } = await axios.get(`${API_URI}/valid`, {
+                params:{
+                    uname: uname,
+                    pass: pass
+                }
+            });
+            return response
+        } catch (error) {
+            console.error(error.message);
+        }
+    }
+
     // For error message
     const [errorMessages, setErrorMessages] = useState({});
     const [isSubmitted, setIsSubmitted] = useState(false);
@@ -66,6 +84,7 @@ const Login = () => {
         // Find user login info
         const userData = database.find((user) => user.username === uname);
 
+        checkPass(uname, pass)
         // Compare user info
         if (userData) {
             if (userData.password !== pass) {
@@ -137,29 +156,29 @@ const Login = () => {
                         </div>
                         <img className="img-login" alt="Object other" src="object-other-12.png" />
                         {/* <div className="login-box" /> */}
-                        <div class="container">
-                            <div class="screen">
-                                <div class="screen__content">
-                                    <form class="login-form">
-                                        <div class="login__field">
-                                            <i class="login__icon fas fa-user"></i>
-                                            <input value={uname} onChange={onUnameChange} type="text" class="login__input" placeholder="User name"/>
+                        <div className="container">
+                            <div className="screen">
+                                <div className="screen__content">
+                                    <form className="login-form">
+                                        <div className="login__field">
+                                            <i className="login__icon fas fa-user"></i>
+                                            <input value={uname} onChange={onUnameChange} type="text" className="login__input" placeholder="User name" />
                                         </div>
-                                        <div class="login__field">
-                                            <i class="login__icon fas fa-lock"></i>
-                                            <input value={pass} onChange={onPassChange} type="password" class="login__input" placeholder="Password"/>
+                                        <div className="login__field">
+                                            <i className="login__icon fas fa-lock"></i>
+                                            <input value={pass} onChange={onPassChange} type="password" className="login__input" placeholder="Password" />
                                         </div>
-                                        <button onClick={handleSubmit} class="button login__submit">
-                                            <span class="button__text">Log In Now</span>
-                                            <i class="button__icon fas fa-chevron-right"></i>
+                                        <button onClick={handleSubmit} className="button login__submit">
+                                            <span className="button__text">Log In Now</span>
+                                            <i className="button__icon fas fa-chevron-right"></i>
                                         </button>
                                     </form>
                                 </div>
-                                <div class="screen__background">
-                                    <span class="screen__background__shape screen__background__shape4"></span>
-                                    <span class="screen__background__shape screen__background__shape3"></span>
-                                    <span class="screen__background__shape screen__background__shape2"></span>
-                                    <span class="screen__background__shape screen__background__shape1"></span>
+                                <div className="screen__background">
+                                    <span className="screen__background__shape screen__background__shape4"></span>
+                                    <span className="screen__background__shape screen__background__shape3"></span>
+                                    <span className="screen__background__shape screen__background__shape2"></span>
+                                    <span className="screen__background__shape screen__background__shape1"></span>
                                 </div>
                             </div>
                         </div>

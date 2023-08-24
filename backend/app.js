@@ -1,66 +1,46 @@
 const express = require("express")
 const fs = require("fs")
 const cors = require('cors');
+const  axios = require ('axios');
 
-const DATA_LIMIT = 20;
-const TEMP_DATA_PATH = "./data.json";
 const app = express();
-const readMinutesStep = 1;
 
-const getCurrentTime = () => new Date().toLocaleTimeString('en-US', {
+
+const getDateFromString = (str) => new Date(str).toLocaleTimeString('en-UK', {
     day: "2-digit",
     month: "2-digit",
     year: "2-digit",
     hour12: false,
     hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit"
+    minute: "2-digit"
 });
 
-const receiveMQTT = () => {
-    const tempData = JSON.parse(fs.readFileSync(TEMP_DATA_PATH));
-
-    if (tempData.length == 0)
-    {
-        tempData.push(
-            {
-                "time": getCurrentTime().toString(),
-                "rate": Math.floor(Math.random() * (40 - 20) + 20)
-            }
-        )
-        fs.writeFileSync(TEMP_DATA_PATH, JSON.stringify(tempData))
-        return;
-    }
-
-    const lastItem = tempData[tempData.length - 1];
-    if (tempData.length >= DATA_LIMIT) {
-        tempData.shift();
-    }
-    tempData.push(
-        {
-            "time": getCurrentTime().toString(),
-            "rate": Math.floor(Math.random() * (40 - 20) + 20)
-        }
-    )
-    fs.writeFileSync(TEMP_DATA_PATH, JSON.stringify(tempData))
-}
-
-var receiveMQTTInterval = setInterval(receiveMQTT, Number(readMinutesStep * 60000));
-fs.writeFileSync(TEMP_DATA_PATH, "[]");
 
 app.use(cors({
     origin: '*'
 }));
 
 app.get('/', (req, res) => res.send('Hello World!'));
-app.get('/temperature', (req, res) => {
-    receiveMQTT();
-    console.log("/temperature");
-    res.json(fs.readFileSync(TEMP_DATA_PATH, { encoding: "utf-8" }));
+
+app.get('/temperature', async (req, res) => {
+    const { data: response } = await axios.get(`https://api.thingspeak.com/channels/2250106/fields/1.json?api_key=77GA6KJB9SQT46DZ&results=20`);
+    
+    const payload = response.feeds.map((obj) => {
+        return {
+            time: getDateFromString(obj["created_at"]),
+            rate: Math.floor(Number(obj["field1"]))
+        }
+    })
+    res.json(JSON.stringify(payload));
 });
 
-app.get('/stopReceive', function () {
+app.get('/stopReceive', () => {
     clearInterval(receiveMQTTInterval);
+});
+
+app.get('/valid', async (req, res) => {
+    console.log(req.params);
+    res.json(true)
 });
 
 app.listen(4000, () => console.log('App listening on port 4000'));
