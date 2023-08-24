@@ -12,7 +12,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import { useState } from 'react';
 import axios from 'axios';
 
-const API_URI = "https://a.noboroto.id.vn"
+const API_URI = "http://localhost:4000"
 const intervalTime = 1000
 
 const Homepage = () => {
@@ -133,7 +133,7 @@ const Homepage = () => {
           </div>
           <div className="group-2">
             <div className="overlap-4">
-              <div className="alarmButton">Kích hoạt báo cháy</div>
+              <Button className="alarmButton">KÍCH HOẠT BÁO CHÁY</Button>
             </div>
           </div>
         </div>
