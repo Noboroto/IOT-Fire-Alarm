@@ -10,10 +10,15 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import { Button } from "@mui/material";
 import { useState } from 'react';
 
+import { login } from "../../Redux/Slice/User";
+import store from "../../Redux/store";
+import { useNavigate } from "react-router";
+
 const Login = () => {
     // For error message
     const [errorMessages, setErrorMessages] = useState({});
     const [isSubmitted, setIsSubmitted] = useState(false);
+
     const database = [
         {
             username: "user1",
@@ -22,6 +27,10 @@ const Login = () => {
         {
             username: "user2",
             password: "pass2"
+        },
+        {
+            username: "admin",
+            password: "admin"
         }
     ];
 
@@ -34,50 +43,44 @@ const Login = () => {
             <div className="error">{errorMessages.message}</div>
         );
     const [message, setMessage] = useState('');
+    const navigate = useNavigate()
+
+    const [uname, setUname] = useState("");
+    const [pass, setPass] = useState("");
+
+    const onUnameChange = (e) => {
+        e.preventDefault();
+        setUname(e.target.value);
+    }
+
+    const onPassChange = (e) => {
+        e.preventDefault();
+        setPass(e.target.value);
+    }
 
     // For submit
     const handleSubmit = (event) => {
         // Prevent page reload
         event.preventDefault();
 
-        var { uname, pass } = document.forms[0];
-
         // Find user login info
-        const userData = database.find((user) => user.username === uname.value);
+        const userData = database.find((user) => user.username === uname);
 
         // Compare user info
         if (userData) {
-            if (userData.password !== pass.value) {
+            if (userData.password !== pass) {
                 // Invalid password
                 setErrorMessages({ name: "pass", message: errors.pass });
             } else {
                 setIsSubmitted(true);
+                store.dispatch(login());
+                navigate('/');
             }
         } else {
             // Username not found
             setErrorMessages({ name: "uname", message: errors.uname });
         }
     };
-    const renderForm = (
-        <div className="form">
-            <form onSubmit={handleSubmit}>
-                <div className="input-container username-container">
-                    <label className="text-label">Username </label>
-                    <input type="text" name="uname" required />
-                    {renderErrorMessage("uname")}
-                </div>
-                <div className="input-container password-container">
-                    <label className="text-label">Password </label>
-                    <input type="password" name="pass" required />
-                    {renderErrorMessage("pass")}
-                </div>
-                <div className="button-container">
-                    <input type="submit" />
-                </div>
-            </form>
-        </div>
-    );
-
     const sendMail = () => {
         if (message) {
             const emailSubject = 'Sending feedback';
@@ -87,10 +90,7 @@ const Login = () => {
             window.open(gmailURL, '_blank');
         }
     }
-    const handleClick = event => {
-        event.preventDefault();
-        console.log('handleClick 👉️', message);
-    };
+
     const handleChange = event => {
         setMessage(event.target.value);
         console.log('value is: ', event.target.value);
@@ -143,13 +143,13 @@ const Login = () => {
                                     <form class="login-form">
                                         <div class="login__field">
                                             <i class="login__icon fas fa-user"></i>
-                                            <input type="text" class="login__input" placeholder="User name / Email"/>
+                                            <input value={uname} onChange={onUnameChange} type="text" class="login__input" placeholder="User name"/>
                                         </div>
                                         <div class="login__field">
                                             <i class="login__icon fas fa-lock"></i>
-                                            <input type="password" class="login__input" placeholder="Password"/>
+                                            <input value={pass} onChange={onPassChange} type="password" class="login__input" placeholder="Password"/>
                                         </div>
-                                        <button class="button login__submit">
+                                        <button onClick={handleSubmit} class="button login__submit">
                                             <span class="button__text">Log In Now</span>
                                             <i class="button__icon fas fa-chevron-right"></i>
                                         </button>
