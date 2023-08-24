@@ -246,16 +246,16 @@ void loop()
 {
   // put your main code here, to run repeatedly:
   // int state = check_state();
-  if (!mqttClient.connected())
-  {
-    mqttConnect();
-  }
-  mqttClient.loop();
+  // if (!mqttClient.connected())
+  // {
+  //   mqttConnect();
+  // }
+  // mqttClient.loop();
 
   float temp = readTemp();
   bool gas = isGas();
   bool flame = isFlame();
-  sendDataToMQTT(temp, gas, flame);
+  // sendDataToMQTT(temp, gas, flame);
 
 
   int state = GREEN;
