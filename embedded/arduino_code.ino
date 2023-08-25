@@ -35,8 +35,8 @@
 
 // Wi-fi config
 #ifndef STASSID
-#define STASSID "HCMUS-C22"
-#define STAPSK "phonghoc@c22"
+#define STASSID "NHAN Galaxy"
+#define STAPSK "5123456780"
 #endif
 
 const char *ssid = STASSID;
